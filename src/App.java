@@ -78,7 +78,7 @@ public class App {
     private static void MenuChiffrement() {
         //affichage des options du menu
         System.out.println("\nChiffrement :");
-        System.out.println("1   - Chiffrement de César");
+        System.out.println("1   - Chiffrement par Rot(X)");
         System.out.println("2   - Chiffrement de Vigenère");
         System.out.println("r   - Retour au menu principal");
         System.out.println("q   - Quitte le programme");
@@ -92,12 +92,20 @@ public class App {
         switch (commande) {
             case "1":
                 System.out.println("Entrez le message à chiffrer : ");
+                //récupérer la string de l'utilisateur
                 message = scanner.nextLine();
                 if (message.isEmpty()) {
-                    System.out.println("Veuillez entrer un message à déchiffrer");
                     MenuChiffrement();
+                } else {
+                    System.out.println("Entrez le décalage : ");
+                    int decalage = scanner.nextInt();
+                    //récupérer le decalage de l'utilisateur
+                    scanner.nextLine();
+                    //utiliser la fonction de chiffrement puis afficher le message chiffré
+                    String messageChiffre = ChiffrementRot.chiffrer(message, decalage);
+                    System.out.println("Message chiffré : " + messageChiffre);
                 }
-                break;
+            break;
 
             case "2":
                 System.out.println("Entrez le message à chiffrer : ");
@@ -122,7 +130,7 @@ public class App {
     private static void MenuDechiffrement() {
         //affichage des options du menu
         System.out.println("\nDéchiffrement :");
-        System.out.println("1   - Déchiffrement de César");
+        System.out.println("1   - Déchiffrement par Rot(X)");
         System.out.println("2   - Déchiffrement de Vigenère");
         System.out.println("r   - Retour au menu principal");
         System.out.println("q   - Quitte le programme");
@@ -136,10 +144,19 @@ public class App {
         switch (commande) {    
             case "1":
                 System.out.println("Entrez le message à déchiffrer : ");
+                //récupérer la string de l'utilisateur
                 message = scanner.nextLine();
                 if (message.isEmpty()) {
-                    System.out.println("Veuillez entrer un message à déchiffrer");
                     MenuDechiffrement();
+                } else {
+                    //récupérer le décalage
+                    System.out.println("Entrez le décalage : ");
+                    int decalage = scanner.nextInt();
+                    scanner.nextLine();
+                    //utiliser la fonction de déchiffrement
+                    String messageDechiffre = ChiffrementRot.dechiffrer(message, decalage);
+                    //afficher le message déchiffré
+                    System.out.println("Message déchiffré : " + messageDechiffre);
                 }
                 break;
 
