@@ -1,8 +1,13 @@
+/**
+ * Cette classe permet à l'utilisateur de chiffrer et déchiffrer un message avec une rotation qu'il définit
+ **/
 public class ChiffrementRot {
 
   public static String chiffrer(String message, int decalage) {
 
+    //on utilise un stringbuilder pour ajouter un caractère dans une string dans la boucle
     StringBuilder resultat = new StringBuilder();
+    //on initialise la taille du message
     int taille = message.length();
 
     for (int i = 0; i < taille; i++) {
@@ -24,8 +29,17 @@ public class ChiffrementRot {
           if (nouveauChiffre < 0) nouveauChiffre += 10;
           //on ajoute le caractère dans le résultat
           resultat.append(nouveauChiffre);
+      } else if (caractere >= 32 && caractere <= 126) {
+        //gestion des espaces, symboles et ponctuation en utilisant les codes ASCII
+        int ascii = (int) caractere;
+        //on utilise le modulo 95 pour les caractères ASCII
+        int nouveauAscii = (ascii + decalage) % 95;
+        if (nouveauAscii < 0) nouveauAscii += 95;
+        //on rajoute 32 pour avoir le résultat ASCII
+        resultat.append((char) (nouveauAscii + 32));
       } else {
-          resultat.append(caractere);
+        //ajouter les caractères au résultat
+        resultat.append(caractere);
       }
     }
     //faire en sorte de mettre chiffre en string et de renvoyer le texte chiffré
@@ -38,6 +52,5 @@ public class ChiffrementRot {
     
     //on applique le chiffrement pour déchiffrer en mettant le décalage en négatif
     return chiffrer(message, -decalage);
-  }
-  
+  } 
 }
