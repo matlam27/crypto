@@ -9,8 +9,8 @@ public class App {
         while (true) {
             //affichage du guide pour l'utilisateur
             System.out.print("Entrez une commande : ");
-            System.out.println("help    - Affiche ce menu d'aide");
-            System.out.println("quit    - Quitte le programme");
+            System.out.println("\nhelp    - Affiche ce menu d'aide");
+            System.out.println("q    - Quitte le programme");
             //utiliser le scanner pour obtenir la String que l'utilisateur entre en console
             String commande = scanner.nextLine().toLowerCase();
             
@@ -36,9 +36,9 @@ public class App {
         System.out.println("\nAide du programme :");
         System.out.println("Commandes disponibles :");
         System.out.println("help    - Affiche ce menu d'aide");
-        System.out.println("quit    - Quitte le programme");
-        System.out.println("1    - ");
-        System.out.println("");
-        System.out.println();
+        System.out.println("q    - Quitte le programme");
+        System.out.println("1    - Cette commande permet de chiffrer une chaîne de caractères en utilisant un chiffrement entré par l'utilisateur, cela sécurise n'importe quelle communication");
+        System.out.println("2    - Cette commande permet de déchiffrer une chaîne de caractères en utilisant un chiffrement entré par l'utilisateur");
+        System.out.println("3    - ");
     }
 }
