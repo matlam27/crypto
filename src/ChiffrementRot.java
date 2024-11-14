@@ -29,14 +29,6 @@ public class ChiffrementRot {
           if (nouveauChiffre < 0) nouveauChiffre += 10;
           //on ajoute le caractère dans le résultat
           resultat.append(nouveauChiffre);
-      } else if (caractere >= 32 && caractere <= 126) {
-        //gestion des espaces, symboles et ponctuation en utilisant les codes ASCII
-        int ascii = (int) caractere;
-        //on utilise le modulo 95 pour les caractères ASCII
-        int nouveauAscii = (ascii + decalage) % 95;
-        if (nouveauAscii < 0) nouveauAscii += 95;
-        //on rajoute 32 pour avoir le résultat ASCII
-        resultat.append((char) (nouveauAscii + 32));
       } else {
         //ajouter les caractères au résultat
         resultat.append(caractere);
