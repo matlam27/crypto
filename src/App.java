@@ -3,17 +3,21 @@ import java.util.Scanner;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
 import java.io.FileNotFoundException;
+import java.security.NoSuchAlgorithmException;
 
 public class App {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Entrez une commande : ");
-        System.out.println("\nhelp  - Affiche ce menu d'aide");
+        System.out.println("\nEntrez une commande : ");
+        System.out.println("help  - Affiche ce menu d'aide");
         System.out.println("1   - Chiffrement");
         System.out.println("2   - Déchiffrement");
-        System.out.println("3   - Générer un nombre aléatoire");
+        System.out.println("3   - Hacher un mot de passe");
+        System.out.println("4   - Générer un nombre aléatoire");
         System.out.println("q   - Quitte le programme");
 
         String commande = scanner.nextLine().toLowerCase();
@@ -23,15 +27,18 @@ public class App {
                 MenuAide();
                 break;
 
-            case "1":
+            case "1": // Chiffrement
                 MenuChiffrement();
                 break;
 
-            case "2":
+            case "2": // Déchiffrement
                 MenuDechiffrement();
                 break;
 
-            case "3":
+            case "3": // Hacher un mot de passe
+                MenuHash();
+
+            case "4": // Générer un nombre aléatoire
                 try {
                     File fichierGraine = new File("graine.txt");
                     int graine;
@@ -58,16 +65,17 @@ public class App {
                 main(null);
                 break;
 
-            case "q":
+            case "q": // Quitter le programme
                 scanner.close();
                 return;
 
-            default:
+            default: // Commande non reconnue
                 System.out.println("Commande non reconnue. Tapez 'help' pour voir les commandes disponibles.");
                 main(null);
         }
     }
 
+    // Affiche le menu d'aide
     private static void MenuAide() {
         System.out.println("\nAide du programme :");
         System.out.println("Commandes disponibles :");
@@ -75,7 +83,9 @@ public class App {
         System.out.println("q   - Quitte le programme");
         System.out.println("1   - Chiffrement");
         System.out.println("2   - Déchiffrement");
-        System.out.println("3   - Générer un nombre aléatoire");
+        System.out.println("3   - Hacher un mot de passe");
+        System.out.println("4   - Générer un nombre aléatoire");
+        main(null);
     }
 
     // Affiche le menu de chiffrement
@@ -119,7 +129,7 @@ public class App {
                 while (true) {
                     switch (reponse) {
                         case "o": // Utiliser une clé personnalisée
-                            
+
                             System.out.println("Entrez votre clé : ");
                             String cleCustom = scanner.nextLine();
 
@@ -168,11 +178,12 @@ public class App {
                                     System.out.println("Une erreur s'est produite : " + e.getMessage());
                                     return;
                                 }
-                            } 
-                            
+                            }
+
                             // Utiliser la clé par défaut si le fichier n'existe pas ou est vide
                             else {
-                                cle = "f240485ebe4d995194c220d353a2bdd883807ae1b3572670aea1df45256f0e55"; // clé par défaut
+                                cle = "f240485ebe4d995194c220d353a2bdd883807ae1b3572670aea1df45256f0e55"; // clé par
+                                                                                                          // défaut
                                 try (FileWriter writer = new FileWriter(fichierCle)) {
                                     writer.write(cle);
                                 } catch (IOException e) {
@@ -247,7 +258,7 @@ public class App {
                 break;
 
             case "3": // Déchiffrement avec protocole RC4
-                
+
                 // On demande à l'utilisateur s'il veut utiliser sa propre clé
                 System.out.println("Voulez-vous utiliser votre propre clé ? (o/n)");
                 String reponse = scanner.nextLine().toLowerCase();
@@ -282,7 +293,8 @@ public class App {
 
                             // Déchiffrer le message avec la clé personnalisée
                             RC4 rc4DechiffrerCleCustom = new RC4(cleCustom);
-                            byte[] messageDechiffreCleCustom = rc4DechiffrerCleCustom.chiffrerDechiffrer(messageChiffreCleCustomBytes);
+                            byte[] messageDechiffreCleCustom = rc4DechiffrerCleCustom
+                                    .chiffrerDechiffrer(messageChiffreCleCustomBytes);
                             System.out.println("Message déchiffré : " + new String(messageDechiffreCleCustom));
                             main(null);
                             break;
@@ -338,6 +350,63 @@ public class App {
                 MenuDechiffrement();
                 break;
         }
+    }
+
+    // Affiche le menu de hachage
+    private static void MenuHash() {
+        System.out.println("\nHachage :");
+        System.out.println("1   - Hacher un mot de passe avec MD5");
+        System.out.println("2   - Hacher un mot de passe avec SHA-256");
+        System.out.println("r   - Retour au menu principal");
+        System.out.println("q   - Quitte le programme");
+
+        Scanner scanner = new Scanner(System.in);
+        String commande = scanner.nextLine().toLowerCase();
+        String motDePasse;
+
+        switch (commande) {
+            case "2": // Hacher un mot de passe avec SHA-256
+            // On demande à l'utilisateur d'entrer le mot de passe à hacher    
+            System.out.println("Entrez le mot de passe à hacher : ");
+                motDePasse = scanner.nextLine();
+                // Vérifier si le mot de passe est vide
+                while (motDePasse.isEmpty()) {
+                    System.out.println("Veuillez entrer un mot de passe à hacher.");
+                    motDePasse = scanner.nextLine();
+                }
+                try {
+                    // Créer une instance de MessageDigest avec l'algorithme SHA-256
+                    MessageDigest msg = MessageDigest.getInstance("SHA-256");
+                    // on récupère les bits du hash
+                    byte[] hash = msg.digest(motDePasse.getBytes(StandardCharsets.UTF_8));
+                    // convertir bytes en hexadécimal
+                    StringBuilder s = new StringBuilder();
+                    for (byte b : hash) {
+                        s.append(Integer.toString((b & 0xff) + 0x100, 16).substring(1));
+                    }
+                    motDePasse = s.toString();
+                } catch (NoSuchAlgorithmException e) {
+                    System.out.println("Une erreur s'est produite : " + e.getMessage());
+                }
+                System.out.println("Le mot de passe a été haché avec succès.");
+                System.out.println("Voici le mot de passe haché : " + motDePasse);
+                main(null);
+                break;
+
+            case "r":
+                main(null);
+                break;
+
+            case "q":
+                scanner.close();
+                return;
+
+            default:
+                System.out.println("Commande non reconnue.");
+                MenuHash();
+                break;
+        }
+
     }
 
     private static int getRandomNumber(int graine) {
