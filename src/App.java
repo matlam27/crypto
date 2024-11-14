@@ -80,6 +80,8 @@ public class App {
         System.out.println("\nChiffrement :");
         System.out.println("1   - Chiffrement de César");
         System.out.println("2   - Chiffrement de Vigenère");
+        System.out.println("3   - Chiffrement avec le carré de Polybe");
+        System.out.println("4   - Chiffrement avec la méthode Enigma");
         System.out.println("r   - Retour au menu principal");
         System.out.println("q   - Quitte le programme");
 
@@ -107,6 +109,27 @@ public class App {
                     MenuChiffrement();
                 }
                 break;
+
+            case "3":
+                System.out.println("Entrez le message à chiffrer : ");
+                message = scanner.nextLine();
+                if (message.isEmpty()) {
+                    System.out.println("Veuillez entrer un message à déchiffrer");
+                    MenuChiffrement();
+                }
+                break;
+
+            case "4":
+                System.out.println("Entrez le message à chiffrer : ");
+                message = scanner.nextLine();
+                if(message.isEmpty()) {
+                    System.out.println("Veuillez entre un message à chiffrer");
+                    MenuChiffrement();
+                } else {
+                    String messageEnigma = Enigma.chiffrerEnigma(message);
+                    System.out.println("Message chiffré avec la méthode Enigma :" + messageEnigma);
+                }
+                break;
             
             case "r":
                 main(null);
@@ -124,6 +147,8 @@ public class App {
         System.out.println("\nDéchiffrement :");
         System.out.println("1   - Déchiffrement de César");
         System.out.println("2   - Déchiffrement de Vigenère");
+        System.out.println("3   - Déchiffrement avec le carré de Polybe");
+        System.out.println("4   - Déchiffrement avec la méthode Enigma");
         System.out.println("r   - Retour au menu principal");
         System.out.println("q   - Quitte le programme");
 
@@ -149,6 +174,27 @@ public class App {
                 if (message.isEmpty()) {
                     System.out.println("Veuillez entrer un message à déchiffrer");
                     
+                }
+                break;
+
+            case "3":
+                System.out.println("Entrez le message à chiffrer : ");
+                message = scanner.nextLine();
+                if (message.isEmpty()) {
+                    System.out.println("Veuillez entrer un message à déchiffrer");
+                    MenuChiffrement();
+                }
+                break;
+
+            case "4":
+                System.out.println("Entrez le message à déchiffrer : ");
+                message = scanner.nextLine();
+                if(message.isEmpty()) {
+                    System.out.println("Veuillez entre un message à déchiffrer");
+                    MenuChiffrement();
+                } else {
+                    String messageEnigma = Enigma.chiffrerEnigma(message);
+                    System.out.println("Message déchiffré avec la méthode Enigma :" + messageEnigma);
                 }
                 break;
 
