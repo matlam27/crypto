@@ -1,17 +1,16 @@
-import java.util.Base64;
-import java.util.Scanner;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
-import java.io.FileNotFoundException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
+import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-
         System.out.println("\n\u001B[34m" +
                 "   __  ___                 ___      _          _           __ \n" +
                 "  /  |/  /__ ___  __ __   / _ \\____(_)__  ____(_)__  ___ _/ / \n" +
@@ -33,19 +32,19 @@ public class App {
 
         switch (commande) {
             case "help":
-                MenuAide();
+                MenuAide(scanner);
                 break;
 
             case "1": // Chiffrement
-                MenuChiffrement();
+                MenuChiffrement(scanner);
                 break;
 
             case "2": // Déchiffrement
-                MenuDechiffrement();
+                MenuDechiffrement(scanner);
                 break;
 
             case "3": // Hacher un mot de passe
-                MenuHash();
+                MenuHash(scanner);
 
             case "4": // Générer un nombre aléatoire
                 try {
@@ -75,17 +74,18 @@ public class App {
                 break;
 
             case "q": // Quitter le programme
-                scanner.close();
-                return;
+                System.exit(0); // Force l'arrêt complet du programme
+                break;
 
             default: // Commande non reconnue
                 System.out.println("Commande non reconnue. Tapez 'help' pour voir les commandes disponibles.");
                 main(null);
         }
     }
+    
 
     // Affiche le menu d'aide
-    private static void MenuAide() {
+    private static void MenuAide(Scanner scanner) {
         System.out.println("\n\u001B[33m" +
                 "   ___   _    __   \n" +
                 "  / _ | (_)__/ /__ \n" +
@@ -136,21 +136,21 @@ public class App {
                 "     - Il vous suffit d'entrer une chaîne de caractères et de choisir l'algorithme que vous voulez exécuter");
         System.out.println("=====================================");
 
-        Scanner scanner = new Scanner(System.in);
+
         String commande = scanner.nextLine().toLowerCase();
         if (commande.equals("r")) {
             main(null);
         } else if (commande.equals("q")) {
-            scanner.close();
+            System.exit(0); // Force l'arrêt complet du programme
             return;
         } else {
             System.out.println("Commande non reconnue.");
-            MenuAide();
+            MenuAide(scanner);
         }
     }
 
     // Affiche le menu de chiffrement
-    private static void MenuChiffrement() {
+    private static void MenuChiffrement(Scanner scanner) {
         System.out.println("\n\u001B[36m\n" +
                 "  _______   _ ______                       __ \r\n" + //
                 " / ___/ /  (_) _/ _/______ __ _  ___ ___  / /_\r\n" + //
@@ -166,7 +166,6 @@ public class App {
         System.out.println("q   - Quitte le programme");
         System.out.println("=====================================");
 
-        Scanner scanner = new Scanner(System.in);
         String commande = scanner.nextLine().toLowerCase();
         String message;
 
@@ -221,8 +220,13 @@ public class App {
                             message = scanner.nextLine();
 
                             // Vérifier si le message est vide
-                            if (message.isEmpty()) {
+                            while (message.isEmpty()) {
                                 System.out.println("Veuillez entrer un message à chiffrer.");
+                                message = scanner.nextLine();
+                            }
+                            while (message.length() < 2) {
+                                System.out.println("Le message doit contenir au moins 2 caractères.");
+                                message = scanner.nextLine();
                             }
 
                             // Chiffrer le message avec la clé personnalisée
@@ -268,8 +272,13 @@ public class App {
                             // Demander à l'utilisateur d'entrer le message à chiffrer
                             System.out.println("Entrez le message à chiffrer : ");
                             message = scanner.nextLine();
-                            if (message.isEmpty()) {
+                            while (message.isEmpty()) {
                                 System.out.println("Veuillez entrer un message à chiffrer.");
+                                message = scanner.nextLine();
+                            }
+                            while (message.length() < 2) {
+                                System.out.println("Le message doit contenir au moins 2 caractères.");
+                                message = scanner.nextLine();
                             }
 
                             // Chiffrer le message avec la clé par défaut
@@ -298,18 +307,18 @@ public class App {
                 break;
 
             case "q":
-                scanner.close();
+                System.exit(0); // Force l'arrêt complet du programme
                 return;
 
             default:
                 System.out.println("Commande non reconnue.");
-                MenuChiffrement();
+                MenuChiffrement(scanner);
                 break;
         }
     }
 
     // Affiche le menu de déchiffrement
-    private static void MenuDechiffrement() {
+    private static void MenuDechiffrement(Scanner scanner) {
         System.out.println("\n\u001B[35m\n" +
                 "   ___   __     __   _ ______                       __ \n" +
                 "  / _ \\_/_/____/ /  (_) _/ _/______ __ _  ___ ___  / /_\n" +
@@ -325,7 +334,6 @@ public class App {
         System.out.println("q   - Quitte le programme");
         System.out.println("=====================================");
 
-        Scanner scanner = new Scanner(System.in);
         String commande = scanner.nextLine().toLowerCase();
         String message;
 
@@ -377,6 +385,10 @@ public class App {
                                 System.out.println("Veuillez entrer un message à déchiffrer.");
                                 message = scanner.nextLine();
                             }
+                            while (message.length() < 2) {
+                                System.out.println("Le message doit contenir au moins 2 caractères.");
+                                message = scanner.nextLine();
+                            }
                             // Pour déchiffrer en décodant d'abord en Base64
                             byte[] messageChiffreCleCustomBytes = Base64.getDecoder().decode(message);
 
@@ -418,6 +430,10 @@ public class App {
                                 System.out.println("Veuillez entrer un message à déchiffrer.");
                                 message = scanner.nextLine();
                             }
+                            while (message.length() < 2) {
+                                System.out.println("Le message doit contenir au moins 2 caractères.");
+                                message = scanner.nextLine();
+                            }
                             // Pour déchiffrer en décodant d'abord en Base64
                             byte[] messageChiffreBytes = Base64.getDecoder().decode(message);
 
@@ -443,18 +459,18 @@ public class App {
                 break;
 
             case "q":
-                scanner.close();
+                System.exit(0); // Force l'arrêt complet du programme
                 return;
 
             default:
                 System.out.println("Commande non reconnue.");
-                MenuDechiffrement();
+                MenuDechiffrement(scanner);
                 break;
         }
     }
 
     // Affiche le menu de hachage
-    private static void MenuHash() {
+    private static void MenuHash(Scanner scanner) {
         System.out.println("\n\u001B[32m\n" +
                 "   __ __         __                \n" +
                 "  / // /__ _____/ /  ___ ____ ____ \n" +
@@ -469,7 +485,6 @@ public class App {
         System.out.println("q   - Quitte le programme");
         System.out.println("=====================================");
 
-        Scanner scanner = new Scanner(System.in);
         String commande = scanner.nextLine().toLowerCase();
         String motDePasse;
 
@@ -512,12 +527,12 @@ public class App {
                 break;
 
             case "q":
-                scanner.close();
+                System.exit(0); // Force l'arrêt complet du programme
                 return;
 
             default:
                 System.out.println("Commande non reconnue.");
-                MenuHash();
+                MenuHash(scanner);
                 break;
         }
 
