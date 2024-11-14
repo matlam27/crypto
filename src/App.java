@@ -366,14 +366,18 @@ public class App {
 
         switch (commande) {
             case "2": // Hacher un mot de passe avec SHA-256
-                System.out.println("Entrez le mot de passe à hacher : ");
+            // On demande à l'utilisateur d'entrer le mot de passe à hacher    
+            System.out.println("Entrez le mot de passe à hacher : ");
                 motDePasse = scanner.nextLine();
+                // Vérifier si le mot de passe est vide
                 while (motDePasse.isEmpty()) {
                     System.out.println("Veuillez entrer un mot de passe à hacher.");
                     motDePasse = scanner.nextLine();
                 }
                 try {
+                    // Créer une instance de MessageDigest avec l'algorithme SHA-256
                     MessageDigest msg = MessageDigest.getInstance("SHA-256");
+                    // on récupère les bits du hash
                     byte[] hash = msg.digest(motDePasse.getBytes(StandardCharsets.UTF_8));
                     // convertir bytes en hexadécimal
                     StringBuilder s = new StringBuilder();
