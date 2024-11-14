@@ -71,6 +71,7 @@ public class RC4 {
             sortie[k] = (byte) (message[k] ^ genererUnOctet());
         }
 
+
         // Retourne le tableau d'octets chiffré ou déchiffré
         return sortie;
     }
@@ -84,6 +85,7 @@ public class RC4 {
         // Message à chiffrer
         String message = "Bonjour, comment ça va ?";
 
+        System.out.println("Message original : " + message);
         // Instanciation de RC4 avec la clé
         RC4 rc4 = new RC4(key);
         // Chiffrement du message
