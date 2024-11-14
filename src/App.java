@@ -12,13 +12,16 @@ public class App {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("\nEntrez une commande : ");
+        System.out.println("\n\u001B[34mMENU PRINCIPAL\u001B[0m");  // Bleu
+        System.out.println("=====================================");
         System.out.println("help  - Affiche ce menu d'aide");
-        System.out.println("1   - Chiffrement");
-        System.out.println("2   - Déchiffrement");
-        System.out.println("3   - Hacher un mot de passe");
-        System.out.println("4   - Générer un nombre aléatoire");
-        System.out.println("q   - Quitte le programme");
+        System.out.println("1     - Chiffrement");
+        System.out.println("2     - Déchiffrement");
+        System.out.println("3     - Hacher un mot de passe");
+        System.out.println("4     - Générer un nombre aléatoire");
+        System.out.println("q     - Quitte le programme");
+        System.out.println("=====================================");
+        System.out.print("Entrez une commande : ");
 
         String commande = scanner.nextLine().toLowerCase();
 
@@ -77,25 +80,61 @@ public class App {
 
     // Affiche le menu d'aide
     private static void MenuAide() {
-        System.out.println("\nAide du programme :");
+        System.out.println("\n\u001B[33mMENU D'AIDE\u001B[0m");  // Jaune
+        System.out.println("=====================================");
         System.out.println("Commandes disponibles :");
         System.out.println("help    - Affiche ce menu d'aide");
         System.out.println("q   - Quitte le programme");
-        System.out.println("1   - Chiffrement");
-        System.out.println("2   - Déchiffrement");
-        System.out.println("3   - Hacher un mot de passe");
-        System.out.println("4   - Générer un nombre aléatoire");
+        System.out.println(
+                "\n1    - Cette commande permet de chiffrer une chaîne de caractères en utilisant un chiffrement entré par l'utilisateur, cela sécurise \n       n'importe quelle communication");
+        System.out.println(
+                "     - Il vous suffit d'entrer une chaîne de caractères, puis un nombre pour le chiffrement");
+        System.out.println(
+                "\n2    - Cette commande permet de déchiffrer une chaîne de caractères en utilisant un chiffrement entré par l'utilisateur");
+        System.out.println(
+                "     - Il vous suffit d'entrer une chaîne de caractères, puis un nombre pour le chiffrement");
+        System.out.println(
+                "\n3    - Cette commande permet de chiffrer et déchiffrer en utilisant le chiffre de Vigenère, cela permet une protection de messages");
+        System.out.println("     - Il vous suffit d'entrer une chaîne de caractères et un un mot");
+        System.out.println(
+                "\n4    - Cette commande permet de chiffrer et déchiffrer en utilisant un Carré de Polybe, cela permet de communiquer de façon sécurisée");
+        System.out.println("     - Il vous suffit d'entrer une chaîne de caractères");
+        System.out.println(
+                "\n5    - Cette commande permet de générer un nombre pseudo-aléatoire, cela renforce l'aléa des communications");
+        System.out.println("     - Il vous suffit d'entrer une chaîne de caractères");
+        System.out.println(
+                "\n6    - Cette commande permet de chiffrer et déchiffrer en utilisant la méthode Enigma, cela permet de communiquer de manière protégée");
+        System.out.println("     - Il vous suffit d'entrer une chaîne de caractères");
+        System.out.println(
+                "\n7    - Cette commande permet de chiffrer et déchiffrer en utilisant l'algorithme RC4, cela permet de sécuriser les communications");
+        System.out.println("     - Il vous suffit d'entrer une chaîne de caractères");
+        System.out.println(
+                "\n8    - Cette commande permet de hacher à l'aide de MD5, des messages, cela permet de vérifier l'intégrité des messages");
+        System.out.println("     - Il vous suffit d'entrer une chaîne de caractères");
+        System.out.println(
+                "\n9    - Cette commande permet de hacher à l'aide de SHA-256, des messages, cela permet de garantir l'intégrité des messages");
+        System.out.println("     - Il vous suffit d'entrer une chaîne de caractères");
+        System.out.println(
+                "\n10   - Cette commande permet à l'utilisateur de choisir l'algorithme de chiffrement ou de hachage qu'il préfère");
+        System.out.println("     - Il vous suffit d'appuyer sur entrée sur un algorithme de la liste");
+        System.out.println(
+                "\n11   - Cette commande permet à l'utilisateur d'utiliser plusieurs algorithmes successivement avec un même message");
+        System.out.println(
+                "     - Il vous suffit d'entrer une chaîne de caractères et de choisir l'algorithme que vous voulez exécuter");
+        System.out.println("=====================================");
         main(null);
     }
 
     // Affiche le menu de chiffrement
     private static void MenuChiffrement() {
-        System.out.println("\nChiffrement :");
-        System.out.println("1   - Chiffrement de César");
+        System.out.println("\n\u001B[36mCHIFFREMENT\u001B[0m");  // Cyan
+        System.out.println("=====================================");
+        System.out.println("1   - Chiffrement par Rot(X)");
         System.out.println("2   - Chiffrement de Vigenère");
         System.out.println("3   - Chiffrement avec protocole RC4");
         System.out.println("r   - Retour au menu principal");
         System.out.println("q   - Quitte le programme");
+        System.out.println("=====================================");
 
         Scanner scanner = new Scanner(System.in);
         String commande = scanner.nextLine().toLowerCase();
@@ -233,12 +272,14 @@ public class App {
 
     // Affiche le menu de déchiffrement
     private static void MenuDechiffrement() {
-        System.out.println("\nDéchiffrement :");
-        System.out.println("1   - Déchiffrement de César");
+        System.out.println("\n\u001B[35mDECHIFFREMENT\u001B[0m");  // Magenta
+        System.out.println("=====================================");
+        System.out.println("1   - Déchiffrement par Rot(X)");
         System.out.println("2   - Déchiffrement de Vigenère");
         System.out.println("3   - Déchiffrement avec protocole RC4");
         System.out.println("r   - Retour au menu principal");
         System.out.println("q   - Quitte le programme");
+        System.out.println("=====================================");
 
         Scanner scanner = new Scanner(System.in);
         String commande = scanner.nextLine().toLowerCase();
@@ -288,6 +329,10 @@ public class App {
                             System.out.println("Entrez le message à déchiffrer : ");
                             message = scanner.nextLine();
 
+                            while (message.isEmpty()) {
+                                System.out.println("Veuillez entrer un message à déchiffrer.");
+                                message = scanner.nextLine();
+                            }
                             // Pour déchiffrer en décodant d'abord en Base64
                             byte[] messageChiffreCleCustomBytes = Base64.getDecoder().decode(message);
 
@@ -321,6 +366,10 @@ public class App {
                             System.out.println("Entrez le message à déchiffrer : ");
                             message = scanner.nextLine();
 
+                            while (message.isEmpty()) {
+                                System.out.println("Veuillez entrer un message à déchiffrer.");
+                                message = scanner.nextLine();
+                            }
                             // Pour déchiffrer en décodant d'abord en Base64
                             byte[] messageChiffreBytes = Base64.getDecoder().decode(message);
 
@@ -354,11 +403,13 @@ public class App {
 
     // Affiche le menu de hachage
     private static void MenuHash() {
-        System.out.println("\nHachage :");
+        System.out.println("\n\u001B[32mHACHAGE\u001B[0m");  // Vert
+        System.out.println("=====================================");
         System.out.println("1   - Hacher un mot de passe avec MD5");
         System.out.println("2   - Hacher un mot de passe avec SHA-256");
         System.out.println("r   - Retour au menu principal");
         System.out.println("q   - Quitte le programme");
+        System.out.println("=====================================");
 
         Scanner scanner = new Scanner(System.in);
         String commande = scanner.nextLine().toLowerCase();
