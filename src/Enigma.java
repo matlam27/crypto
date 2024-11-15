@@ -29,6 +29,17 @@ public class Enigma {
       //récupération du caractère de message à l'indice i
       char lettre = message.charAt(i);
 
+      //gestion des espaces pour les laisser tel quel
+      if (lettre == ' '){
+        resultat.append(' ');
+        continue;
+      }
+
+      //vérification du caractère valide
+      if(!Character.isLetter(lettre)) {
+        continue;
+      }
+
       //utiliser les tableaux de connexions pour trouver une paire avec la lettre
       lettre = passerDansTableauConnexions(lettre);
 
