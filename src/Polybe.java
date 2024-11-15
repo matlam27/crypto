@@ -6,16 +6,24 @@ import java.util.*;
 public class Polybe {
     // Instructions
     private static final String INSTRUCTIONS = """
-        Guide du Carré de Polybe:
-        - Une grille aleatoire de 5x5 contient l'alphabet
-        - Chaque lettre est encodée par sa position (ligne,colonne) ou (colonne,ligne)
-        - Exemple: avec ligne-colonne, 'A' en position (1,1) devient '11'
-        - Les espaces sont préservés, les autres caractères spéciaux sont ignorés
-        
-        Etapes:
-        1. Choisissez le mode: ligne-colonne (1) ou colonne-ligne (2)
-        2. Entrez votre texte (max 1000 caractères)
-        3. Le programme affiche le texte chiffré et déchiffré
+            Guide du Carré de Polybe:
+                    - Une grille 5x5 contient l'alphabet (sans W qui est remplacé par VV)
+                    - Chaque lettre est encodée par 2 chiffres représentant sa position
+                    - Mode 1 (ligne-colonne): lettre en (2,3) devient '23'
+                    - Mode 2 (colonne-ligne): lettre en (2,3) devient '32'
+                    - Les espaces et la ponctuation sont conservés
+                    - Les accents sont ignorés
+                   \s
+                    Utilisation:
+                    1. Choisissez le mode de chiffrement:
+                       - Tapez 1 pour le mode ligne-colonne
+                       - Tapez 2 pour le mode colonne-ligne
+                    2. Entrez votre texte (maximum 1000 lettres)
+                    3. Le programme affichera:
+                       - La grille de chiffrement
+                       - Votre texte original
+                       - Le texte chiffré
+                       - Le texte déchiffré
         """;
 
     // Constantes tailles et longueur max
@@ -35,20 +43,26 @@ public class Polybe {
     private final char[][] grillePolybe = new char[TAILLE_GRILLE][TAILLE_GRILLE];
     private final boolean estModeLigneColonne;
 
+    // Stockage du texte original avec caracteres speciaux pour le dechiffrement
+    private String texteSauvegarde;
+
     /**
      * Constructeur initialisant le mode de chiffrement et la grille
      * @param estModeLigneColonne true pour le mode ligne-colonne, false pour colonne-ligne
      **/
     public Polybe(boolean estModeLigneColonne) {
+        // Initialisation de la grille
         this.estModeLigneColonne = estModeLigneColonne;
         genererGrilleAleatoire();
     }
+
 
     /**
      * Génère une grille aléatoire à partir de l'alphabet
      * Utilise Collections.shuffle pour mélanger les lettres
      **/
     private void genererGrilleAleatoire() {
+        // Mélange aleatoire des lettres
         List<Character> lettresMelangees = new ArrayList<>(ALPHABET);
         Collections.shuffle(lettresMelangees);
         int index = 0;
@@ -71,40 +85,21 @@ public class Polybe {
             throw new IllegalArgumentException("Texte invalide");
         }
         // Utilise StringBuilder pour manipuler plus facilement la chaine de caracteres
-        StringBuilder texteChiffre = new StringBuilder();
+        StringBuilder texteChiffre = new StringBuilder(texte.length() * 2);
         String texteNormalise = normaliserTexte(texte);
-        boolean estPremierMot = true;
-        StringBuilder motCourant = new StringBuilder();
 
         // Boucle for : Parcourt chaque caractere du texte a chiffrer
         for (char caractere : texteNormalise.toCharArray()) {
-            // Si on rencontre un espace, on termine le mot en cours
-            if (caractere == ' ') {
-                if (!motCourant.isEmpty()) {
-                    // On ajoute deux espaces entre les mots (sauf pour le premier)
-                    if (!estPremierMot) {
-                        texteChiffre.append("  ");
-                    }
-                    texteChiffre.append(motCourant);
-                    motCourant = new StringBuilder();
-                }
-                estPremierMot = false;
-                continue;
+            if (Character.isLetter(caractere)) {
+                // Chiffrement du caractere : trouve sa position dans la grille et la convertit
+                Position position = trouverPosition(caractere);
+                texteChiffre.append(convertirCoordonnees(position));
+            } else {
+                // Ajout des caracteres speciaux tels quels
+                texteChiffre.append(caractere);
             }
-
-            // Chiffrement du caractere : trouve sa position dans la grille et la convertit
-            Position position = trouverPosition(caractere);
-            motCourant.append(convertirCoordonnees(position));
         }
-
-        // Ajout du dernier mot s'il existe
-        if (!motCourant.isEmpty()) {
-            if (!estPremierMot) {
-                texteChiffre.append("  ");
-            }
-            texteChiffre.append(motCourant);
-        }
-        // Conversion finale en String et renvoi du résultat
+        // Conversion finale en String et renvoi du resultat
         return texteChiffre.toString();
     }
 
@@ -113,48 +108,43 @@ public class Polybe {
      * @param texteChiffre Texte à dechiffrer
      * @return Texte dechiffre en minuscules
      **/
-    // Utilise StringBuilder pour manipuler plus facilement la chaine de caracteres
     public String dechiffrer(String texteChiffre) {
-        if (texteChiffre == null) {
+        if (texteChiffre == null || texteSauvegarde == null) {
             throw new IllegalArgumentException("Le texte chiffré ne peut pas être null");
         }
-        if (!texteChiffre.matches("^[1-5]{2}(\\s*[1-5]{2})*$")) {
-            throw new IllegalArgumentException("Format du texte chiffré invalide");
-        }
-        StringBuilder texteDechiffre = new StringBuilder();
-        // Separation du texte en mots (separes par des doubles espaces)
-        String[] mots = texteChiffre.split("  ");
 
-        // Boucle for : Parcourt chaque caractere du texte a chiffrer
-        for (int indexMot = 0; indexMot < mots.length; indexMot++) {
-            if (mots[indexMot].isEmpty()) continue;
+        // Utilise StringBuilder pour manipuler plus facilement la chaine de caracteres
+        StringBuilder texteDechiffre = new StringBuilder(texteChiffre.length());
+        int indexSauvegarde = 0;
 
-            // Parcours des caracteres du mot courant (par paires de chiffres)
-            int indexCaractere = 0;
-            while (indexCaractere < mots[indexMot].length()) {
-                // Détection du motif VV (W)
-                // Verifie si les 4 prochains chiffres forment deux coordonnees identiques
-                if (indexCaractere + 3 < mots[indexMot].length() &&
-                        mots[indexMot].substring(indexCaractere, indexCaractere + 2)
-                                .equals(mots[indexMot].substring(indexCaractere + 2, indexCaractere + 4))) {
-                    // Si on trouve un double V, on ajoute W
-                    texteDechiffre.append('w');
-                    // On avance de 4 positions (2 coordonnees)
-                    indexCaractere += 4;
-                } else {
-                    Position position = convertirChiffreVersPosition(mots[indexMot].substring(indexCaractere, indexCaractere + 2));
-                    texteDechiffre.append(Character.toLowerCase(grillePolybe[position.ligne][position.colonne]));
-                    indexCaractere += 2;
+        for (int i = 0; i < texteChiffre.length(); i++) {
+            char caractere = texteChiffre.charAt(i);
+
+            if (Character.isDigit(caractere)) {
+                if (i + 1 >= texteChiffre.length() || !Character.isDigit(texteChiffre.charAt(i + 1))) {
+                    throw new IllegalArgumentException("Format du texte chiffré invalide");
                 }
-            }
 
-            // Ajoute un espace entre les mots, sauf pour le dernier
-            if (indexMot < mots.length - 1) {
-                texteDechiffre.append(" ");
+                char caractereOriginal = Character.toLowerCase(texteSauvegarde.charAt(indexSauvegarde));
+
+                // Verifier si c'est un W (represente par VV)
+                if (caractereOriginal == 'w') {
+                    texteDechiffre.append('w');
+                    // Sauter les 4 chiffres (VV)
+                    i += 3;
+                } else {
+                    // Pour tous les autres caracteres
+                    texteDechiffre.append(caractereOriginal);
+                    // Sauter les 2 chiffres
+                    i++;
+                }
+                indexSauvegarde++;
+            } else {
+                texteDechiffre.append(caractere);
+                indexSauvegarde++;
             }
         }
 
-        // Renvoie le texte dechiffre final
         return texteDechiffre.toString();
     }
 
@@ -165,28 +155,38 @@ public class Polybe {
      * - Ne garde que les lettres et espaces
      **/
     private String normaliserTexte(String texte) {
+        // Sauvegarde du texte original pour le dechiffrement
+        this.texteSauvegarde = texte;
         // Utilise StringBuilder pour manipuler plus facilement la chaine de caracteres
-        StringBuilder resultat = new StringBuilder();
+        StringBuilder resultat = new StringBuilder(texte.length() * 2);
         int longueurActuelle = 0;
-        // Conversion en minuscules et parcours caractere par caractere
-        for (char caractere : texte.toLowerCase().toCharArray()) {
-            // Vérifier si l'ajout dépasserait la limite
-            if (caractere == 'w' && longueurActuelle + 2 > LONGUEUR_MAX) {
-                throw new IllegalArgumentException("Texte trop long après conversion W→VV");
-            }
+
+        char[] chars = texte.toCharArray();
+        for (int i = 0; i < chars.length; i++) {
             if (longueurActuelle >= LONGUEUR_MAX) {
                 throw new IllegalArgumentException("Texte trop long");
             }
-            // Cas special : le 'w' est remplace par 'vv'
-            if (caractere == 'w') {
-                resultat.append("vv");
-                // Ne garde que les lettres (a-z) et les espaces
-            } else if (caractere == ' ' || (caractere >= 'a' && caractere <= 'z')) {
-                resultat.append(caractere);
+
+            char caractereMin = Character.toLowerCase(chars[i]);
+
+            // Traitement special pour W uniquement
+            if (caractereMin == 'w') {
+                if (longueurActuelle + 2 > LONGUEUR_MAX) {
+                    throw new IllegalArgumentException("Texte trop long après conversion W→VV");
+                }
+                resultat.append("VV");
+                longueurActuelle += 2;
+            } else if (Character.isLetter(chars[i])) {
+                // Toutes les autres lettres sont simplement converties en majuscules
+                resultat.append(Character.toUpperCase(chars[i]));
+                longueurActuelle++;
+            } else {
+                // Caracteres speciaux gardes tels quels
+                resultat.append(chars[i]);
             }
         }
-        // Conversion finale en majuscules avant de renvoyer le resultat
-        return resultat.toString().toUpperCase();
+
+        return resultat.toString();
     }
 
     /**
@@ -194,21 +194,29 @@ public class Polybe {
      * @return true si le texte est valide
      **/
     private boolean validerTexte(String texte) {
+        // Verification null
         if (texte == null) {
             throw new IllegalArgumentException("Le texte ne peut pas être null");
         }
-        // Supprime tous les caracteres qui ne sont pas des lettres ou des espaces
-        String texteNettoye = texte.replaceAll("[^A-Za-z ]", "");
-
-        if (texteNettoye.trim().isEmpty()) {
+        // Verification de la longueur maximale potentielle (cas ou tous les caracteres sont des W)
+        if (texte.length() * 2 > LONGUEUR_MAX) {
+            throw new IllegalArgumentException("Texte potentiellement trop long après conversion des W en VV");
+        }
+        // Verification des caracteres autorisés
+        if (!texte.matches("[A-Za-z\\s\\p{Punct}]+")) {
+            throw new IllegalArgumentException("Le texte ne peut contenir que des lettres, des espaces et de la ponctuation");
+        }
+        // Verification du nombre minimum de lettres
+        String texteNettoye = texte.replaceAll("[^A-Za-z]", "");
+        if (texteNettoye.isEmpty()) {
             throw new IllegalArgumentException("Le texte doit contenir au moins une lettre");
         }
+        // Verification de la longueur après nettoyage
         if (texteNettoye.length() > LONGUEUR_MAX) {
             throw new IllegalArgumentException("Le texte est trop long (maximum " + LONGUEUR_MAX + " caractères)");
         }
         return true;
     }
-
     /**
      * Trouve la position d'un caractère dans la grille
      * @return Position (ligne, colonne) du caractère
@@ -237,7 +245,7 @@ public class Polybe {
      * Convertit une position en coordonnées chiffrées
      **/
     private String convertirCoordonnees(Position position) {
-        // Retourne les coordonnées chiffrées en fonction du mode
+        // Retourne les coordonnees chiffrees en fonction du mode
         return estModeLigneColonne ?
                 String.format("%d%d", position.ligne + 1, position.colonne + 1) :
                 String.format("%d%d", position.colonne + 1, position.ligne + 1);
@@ -247,12 +255,12 @@ public class Polybe {
      * Convertit des coordonnées chiffrées en position
      **/
     private Position convertirChiffreVersPosition(String coordonnees) {
-        // Vérifier la longueur des coordonnées
+        // Verifier la longueur des coordonnees
         if (coordonnees.length() != 2) {
             throw new IllegalArgumentException("Format de coordonnées invalide");
         }
 
-        // Vérifier que ce sont des chiffres valides (1-5)
+        // Verifier que ce sont des chiffres valides (1-5)
         int premier = Character.getNumericValue(coordonnees.charAt(0));
         int second = Character.getNumericValue(coordonnees.charAt(1));
 
@@ -277,17 +285,25 @@ public class Polybe {
      * Affiche la grille de Polybe formatée
      **/
     public void afficherGrille() {
-        // Affichage de la grille
-        System.out.println("\nGrille de Polybe:");
-        System.out.println("   1  2  3  4  5");
+        // Affichage de la grille avec bordures
+        System.out.println("\nGrille de Polybe :");
+        System.out.println("┌───┬───┬───┬───┬───┬───┐");
+        System.out.println("│   │ 1 │ 2 │ 3 │ 4 │ 5 │");
+        System.out.println("├───┼───┼───┼───┼───┼───┤");
+
         // Parcours de chaque cellule de la grille
         for (int i = 0; i < TAILLE_GRILLE; i++) {
-            System.out.printf("%d  ", i + 1);
+            System.out.printf("│ %d │", i + 1);
             for (int j = 0; j < TAILLE_GRILLE; j++) {
-                System.out.printf("%c  ", grillePolybe[i][j]);
+                System.out.printf(" %c │", grillePolybe[i][j]);
             }
-            System.out.println();
+            if (i < TAILLE_GRILLE - 1) {
+                System.out.println("\n├───┼───┼───┼───┼───┼───┤");
+            } else {
+                System.out.println("\n└───┴───┴───┴───┴───┴───┘");
+            }
         }
+        System.out.println();
     }
 
     /**
@@ -316,7 +332,7 @@ public class Polybe {
             Polybe polybe = new Polybe(modeLigneColonne);
             polybe.afficherGrille();
 
-            // Boucle de saisie du texte jusqu'à ce qu'il soit valide
+            // Boucle de saisie du texte jusqu'a ce qu'il soit valide
             String texte = null;
             String chiffre = null;
             String dechiffre = null;
@@ -332,7 +348,7 @@ public class Polybe {
                 }
             }
 
-            // Affichage des résultats
+            // Affichage des resultats
             System.out.println("\nRésultats:");
             System.out.println("Original : " + texte);
             System.out.println("Chiffré  : " + chiffre);
