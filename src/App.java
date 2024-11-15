@@ -7,14 +7,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import java.util.Scanner;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.io.FileNotFoundException;
-import java.security.NoSuchAlgorithmException;
-
 
 public class App {
 
@@ -80,13 +72,17 @@ public class App {
                 } catch (IOException | NumberFormatException e) {
                     System.out.println("Une erreur s'est produite : " + e.getMessage());
                 }
+                System.out.println("=====================================");
+                System.out.println("Appuyez sur 'ENTER' pour revenir au menu principal.");
+                while (!scanner.nextLine().isEmpty()) {
+                    System.out.println("Appuyez sur 'ENTER' pour revenir au menu principal.");
+                }
                 main(null);
                 break;
 
             case "q": // Quitter le programme
                 System.exit(0); // Force l'arrêt complet du programme
                 break;
-
 
             default: // Commande non reconnue
                 System.out.println("Commande non reconnue. Tapez 'help' pour voir les commandes disponibles.");
@@ -187,28 +183,40 @@ public class App {
                 + "                                                         \n"
                 + "CHIFFREMENT\u001B[0m"); // Cyan
         System.out.println("=====================================");
-				System.out.println("1   - Chiffrement de César");
+        System.out.println("1   - Chiffrement avec rotation");
         System.out.println("2   - Chiffrement de Vigenère");
         System.out.println("3   - Chiffrement avec le carré de Polybe");
         System.out.println("4   - Chiffrement avec la méthode Enigma");
-				System.out.println("5   - Chiffrement avec le protocole RC4");
-
+        System.out.println("5   - Chiffrement avec le protocole RC4");
         System.out.println("r   - Retour au menu principal");
         System.out.println("q   - Quitte le programme");
         System.out.println("=====================================");
-
 
         String commande = scanner.nextLine().toLowerCase();
         String message;
 
         switch (commande) {
-            case "1": // Chiffrement de César
+            case "1": // Chiffrement avec rotation
                 System.out.println("Entrez le message à chiffrer : ");
                 message = scanner.nextLine();
-                if (message.isEmpty()) {
+                while (message.isEmpty()) {
                     System.out.println("Veuillez entrer un message à chiffrer.");
+                    message = scanner.nextLine();
                 }
-                // Ici, vous pouvez ajouter l'algorithme de chiffrement de César
+                System.out.println("Entrez le décalage pour le chiffrement : ");
+                int decalage = scanner.nextInt();
+                while (decalage < 1 || decalage > 25) {
+                    System.out.println("Le décalage doit être compris entre 1 et 25.");
+                    decalage = scanner.nextInt();
+                }
+                String messageChiffreRotation = ChiffrementRot.chiffrer(message, decalage);
+                System.out.println("Message chiffré : " + messageChiffreRotation);
+                System.out.println("=====================================");
+                System.out.println("Appuyez sur 'ENTER' pour revenir au menu principal.");
+                while (!scanner.nextLine().isEmpty()) {
+                    System.out.println("Appuyez sur 'ENTER' pour revenir au menu principal.");
+                }
+                main(null);
                 break;
 
             case "2": // Chiffrement de Vigenère
@@ -234,7 +242,7 @@ public class App {
                 main(null);
                 break;
 
-						case "4": // chiffrement avec Enigma
+            case "4": // chiffrement avec Enigma
                 //on affiche ceci pour que l'utilisateur entre son message
                 System.out.println("Entrez le message à chiffrer : ");
                 message = scanner.nextLine();
@@ -248,17 +256,17 @@ public class App {
                     System.out.println("Veuillez n'entrer que des mots ou phrases écrit(e)s en majuscules.");
                     message = scanner.nextLine();
                 }
-                    //on appelle la class Enigma et la fonction de chiffrement et on affiche le message chiffré
-                    String messageEnigma = Enigma.chiffrerEnigma(message);
-                    System.out.println("Message chiffré avec la méthode Enigma :" + messageEnigma);
+                //on appelle la class Enigma et la fonction de chiffrement et on affiche le message chiffré
+                String messageEnigma = Enigma.chiffrerEnigma(message);
+                System.out.println("Message chiffré avec la méthode Enigma :" + messageEnigma);
                 System.out.println("=====================================");
-                            System.out.println("Appuyez sur 'ENTER' pour revenir au menu principal.");
-                            while (!scanner.nextLine().isEmpty()) {
-                                System.out.println("Appuyez sur 'ENTER' pour revenir au menu principal.");
-                            }
-                            main(null);
+                System.out.println("Appuyez sur 'ENTER' pour revenir au menu principal.");
+                while (!scanner.nextLine().isEmpty()) {
+                    System.out.println("Appuyez sur 'ENTER' pour revenir au menu principal.");
+                }
+                main(null);
                 break;
-						
+
             case "5": // Chiffrement avec protocole RC4
 
                 // On demande à l'utilisateur s'il veut utiliser sa propre clé
@@ -399,7 +407,7 @@ public class App {
                 + "                                                         \n"
                 + "DECHIFFREMENT\u001B[0m"); // Magenta
         System.out.println("=====================================");
-        System.out.println("1   - Déchiffrement de César");
+        System.out.println("1   - Déchiffrement avec rotation");
         System.out.println("2   - Déchiffrement de Vigenère");
         System.out.println("3   - Déchiffrement avec le carré de Polybe");
         System.out.println("4   - Déchiffrement avec la méthode Enigma");
@@ -407,15 +415,32 @@ public class App {
         System.out.println("r   - Retour au menu principal");
         System.out.println("q   - Quitte le programme");
         System.out.println("=====================================");
-      
+
         String commande = scanner.nextLine().toLowerCase();
         String message;
 
         switch (commande) {
-            case "1": // Déchiffrement de César
+            case "1": // Déchiffrement avec rotation
                 System.out.println("Entrez le message à déchiffrer : ");
                 message = scanner.nextLine();
-                // Ajouter le déchiffrement de César ici
+                while (message.isEmpty()) {
+                    System.out.println("Veuillez entrer un message à déchiffrer.");
+                    message = scanner.nextLine();
+                }
+                System.out.println("Entrez le décalage pour le déchiffrement : ");
+                int decalage = scanner.nextInt();
+                while (decalage < 1 || decalage > 25) {
+                    System.out.println("Le décalage doit être compris entre 1 et 25.");
+                    decalage = scanner.nextInt();
+                }
+                String messageDechiffreRotation = ChiffrementRot.dechiffrer(message, decalage);
+                System.out.println("Message déchiffré : " + messageDechiffreRotation);
+                System.out.println("=====================================");
+                System.out.println("Appuyez sur 'ENTER' pour revenir au menu principal.");
+                while (!scanner.nextLine().isEmpty()) {
+                    System.out.println("Appuyez sur 'ENTER' pour revenir au menu principal.");
+                }
+                main(null);
                 break;
 
             case "2": // Déchiffrement de Vigenère
@@ -441,7 +466,7 @@ public class App {
                 main(null);
                 break;
 
-						case "4": // déchiffrement avec Enigma
+            case "4": // déchiffrement avec Enigma
                 //messsage affiché
                 System.out.println("Entrez le message à déchiffrer : ");
                 message = scanner.nextLine();
@@ -455,17 +480,17 @@ public class App {
                     System.out.println("Veuillez n'entrer que des mots ou phrases écrit(e)s en majuscules.");
                     message = scanner.nextLine();
                 }
-                    String messageDechiffre = Enigma.chiffrerEnigma(message);
-                    //on affiche le message déchiffré 
-                    System.out.println("Message déchiffré avec la méthode Enigma : " + messageDechiffre);
-          System.out.println("=====================================");
-                            System.out.println("Appuyez sur 'ENTER' pour revenir au menu principal.");
-                            while (!scanner.nextLine().isEmpty()) {
-                                System.out.println("Appuyez sur 'ENTER' pour revenir au menu principal.");
-                            }
-                            main(null);
+                String messageDechiffre = Enigma.chiffrerEnigma(message);
+                //on affiche le message déchiffré 
+                System.out.println("Message déchiffré avec la méthode Enigma : " + messageDechiffre);
+                System.out.println("=====================================");
+                System.out.println("Appuyez sur 'ENTER' pour revenir au menu principal.");
+                while (!scanner.nextLine().isEmpty()) {
+                    System.out.println("Appuyez sur 'ENTER' pour revenir au menu principal.");
+                }
+                main(null);
                 break;
-						
+
             case "5": // Déchiffrement avec protocole RC4
 
                 // On demande à l'utilisateur s'il veut utiliser sa propre clé
@@ -474,8 +499,9 @@ public class App {
 
                 while (true) {
                     switch (reponse) {
-                        case "o": // Utiliser une clé personnalisée
-
+                        case "o" -> {
+                            // Utiliser une clé personnalisée
+                            
                             System.out.println("Entrez votre clé : ");
                             String cleCustom = scanner.nextLine();
 
@@ -519,9 +545,9 @@ public class App {
                                 System.out.println("Appuyez sur 'ENTER' pour revenir au menu principal.");
                             }
                             main(null);
-                            break;
+                }
 
-                        case "n":
+                        case "n" -> {
                             File fichierCle = new File("cleRC4.txt");
                             String cle;
                             if (fichierCle.exists() && fichierCle.length() > 0) {
@@ -564,12 +590,12 @@ public class App {
                                 System.out.println("Appuyez sur 'ENTER' pour revenir au menu principal.");
                             }
                             main(null);
-                            break;
-                            
-                        default:
+                }
+
+                        default -> {
                             System.out.println("Commande non reconnue. Voulez-vous utiliser votre propre clé ? (o/n)");
                             reponse = scanner.nextLine().toLowerCase();
-                            break;
+                }
                     }
                 }
             case "r":
@@ -608,11 +634,11 @@ public class App {
 
         switch (commande) {
             case "1": // Hacher un mot de passe avec MD5
-            System.out.println("Entrez le mot de passe à hacher :");
-            motDePasse = scanner.nextLine();
-            motDePasse = MD5.hash(motDePasse);
-            System.out.println("Mot de passe haché avec MD5 : "+ motDePasse);
-            System.out.println("=====================================");
+                System.out.println("Entrez le mot de passe à hacher :");
+                motDePasse = scanner.nextLine();
+                motDePasse = MD5.hash(motDePasse);
+                System.out.println("Mot de passe haché avec MD5 : " + motDePasse);
+                System.out.println("=====================================");
                 System.out.println("Appuyez sur 'ENTER' pour revenir au menu principal.");
                 while (!scanner.nextLine().isEmpty()) {
                     System.out.println("Appuyez sur 'ENTER' pour revenir au menu principal.");
@@ -620,8 +646,8 @@ public class App {
                 main(null);
 
             case "2": // Hacher un mot de passe avec SHA-256
-            // On demande à l'utilisateur d'entrer le mot de passe à hacher    
-            System.out.println("Entrez le mot de passe à hacher : ");
+                // On demande à l'utilisateur d'entrer le mot de passe à hacher    
+                System.out.println("Entrez le mot de passe à hacher : ");
                 motDePasse = scanner.nextLine();
                 // Vérifier si le mot de passe est vide
                 while (motDePasse.isEmpty()) {
@@ -652,86 +678,6 @@ public class App {
                 main(null);
                 break;
 
-            case "3": // Déchiffrement avec protocole RC4
-
-                // On demande à l'utilisateur s'il veut utiliser sa propre clé
-                System.out.println("Voulez-vous utiliser votre propre clé ? (o/n)");
-                String reponse = scanner.nextLine().toLowerCase();
-
-                while (true) {
-                    switch (reponse) {
-                        case "o": // Utiliser une clé personnalisée
-
-                            System.out.println("Entrez votre clé : ");
-                            String cleCustom = scanner.nextLine();
-
-                            // Vérifier si la clé est vide
-                            while (cleCustom.isEmpty()) {
-                                System.out.println("Veuillez entrer une clé.");
-                                cleCustom = scanner.nextLine();
-                            }
-
-                            // Sauvegarder la clé personnalisée dans un fichier
-                            try (FileWriter writer = new FileWriter("cleRC4.txt")) {
-                                writer.write(cleCustom);
-                            } catch (IOException e) {
-                                System.out.println("Une erreur s'est produite : " + e.getMessage());
-                            }
-                            System.out.println("Votre clé a été sauvegardée.");
-
-                            // Demander à l'utilisateur d'entrer le message à déchiffrer
-                            System.out.println("Entrez le message à déchiffrer : ");
-                            message = scanner.nextLine();
-
-                            // Pour déchiffrer en décodant d'abord en Base64
-                            byte[] messageChiffreCleCustomBytes = Base64.getDecoder().decode(message);
-
-                            // Déchiffrer le message avec la clé personnalisée
-                            RC4 rc4DechiffrerCleCustom = new RC4(cleCustom);
-                            byte[] messageDechiffreCleCustom = rc4DechiffrerCleCustom
-                                    .chiffrerDechiffrer(messageChiffreCleCustomBytes);
-                            System.out.println("Message déchiffré : " + new String(messageDechiffreCleCustom));
-                            main(null);
-                            break;
-
-                        case "n":
-                            File fichierCle = new File("cleRC4.txt");
-                            String cle;
-                            if (fichierCle.exists() && fichierCle.length() > 0) {
-                                try (Scanner fileScanner = new Scanner(fichierCle)) {
-                                    cle = fileScanner.nextLine();
-                                } catch (FileNotFoundException e) {
-                                    System.out.println("Une erreur s'est produite : " + e.getMessage());
-                                    return;
-                                }
-                            } else {
-                                cle = "f240485ebe4d995194c220d353a2bdd883807ae1b3572670aea1df45256f0e55";
-                                try (FileWriter writer = new FileWriter(fichierCle)) {
-                                    writer.write(cle);
-                                } catch (IOException e) {
-                                    System.out.println("Une erreur s'est produite : " + e.getMessage());
-                                    return;
-                                }
-                            }
-                            System.out.println("Entrez le message à déchiffrer : ");
-                            message = scanner.nextLine();
-
-                            // Pour déchiffrer en décodant d'abord en Base64
-                            byte[] messageChiffreBytes = Base64.getDecoder().decode(message);
-
-                            // Déchiffrer le message avec la clé personnalisée
-                            RC4 rc4Dechiffrer = new RC4(cle);
-                            byte[] messageDechiffre = rc4Dechiffrer.chiffrerDechiffrer(messageChiffreBytes);
-                            System.out.println("Message déchiffré : " + new String(messageDechiffre));
-                            main(null);
-                            break;
-
-                        default:
-                            System.out.println("Commande non reconnue. Voulez-vous utiliser votre propre clé ? (o/n)");
-                            reponse = scanner.nextLine().toLowerCase();
-                            break;
-                    }
-                }
             case "r":
                 main(null);
                 break;
@@ -742,7 +688,7 @@ public class App {
 
             default:
                 System.out.println("Commande non reconnue.");
-                MenuHash( scanner);
+                MenuHash(scanner);
 
                 break;
         }
@@ -765,7 +711,6 @@ public class App {
             fin = longueur;
         }
         String chiffresMilieu = stringAuCarre.substring(debut, fin);
-        ;
 
         return Integer.parseInt(chiffresMilieu);
     }
