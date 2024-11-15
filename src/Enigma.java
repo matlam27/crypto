@@ -35,10 +35,6 @@ public class Enigma {
         continue;
       }
 
-      //vérification du caractère valide
-      if(!Character.isLetter(lettre)) {
-        continue;
-      }
 
       //utiliser les tableaux de connexions pour trouver une paire avec la lettre
       lettre = passerDansTableauConnexions(lettre);

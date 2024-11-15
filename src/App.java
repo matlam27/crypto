@@ -127,7 +127,12 @@ public class App {
                 if(message.isEmpty()) {
                     System.out.println("Veuillez entre un message à chiffrer");
                     MenuChiffrement();
-                } else {
+                }
+                //vérification du caractère valide
+                if (!message.matches("[A-Z ]*")) {
+                    System.out.println("Veuillez n'entrer que des mots ou phrases écrit(e)s en majuscules.");
+                    MenuChiffrement();
+                }else {
                     //on appelle la class Enigma et la fonction de chiffrement et on affiche le message chiffré
                     String messageEnigma = Enigma.chiffrerEnigma(message);
                     System.out.println("Message chiffré avec la méthode Enigma :" + messageEnigma);
@@ -194,13 +199,18 @@ public class App {
                 System.out.println("Entrez le message à déchiffrer : ");
                 message = scanner.nextLine();
                 //si le message n'est pas vide on appelle la classe Enigma et la fonction chiffrerEnigma
-                if (!message.isEmpty()) {
+                if (message.isEmpty()) {
+                    System.out.println("Veuillez entrer un message à déchiffrer.");
+                    MenuDechiffrement();
+                } 
+                //vérification du caractère valide
+                if (!message.matches("[A-Z ]*")) {
+                    System.out.println("Veuillez n'entrer que des mots ou phrases écrit(e)s en majuscules.");
+                    MenuDechiffrement();
+                }else {
                     String messageDechiffre = Enigma.chiffrerEnigma(message);
                     //on affiche le message déchiffré 
                     System.out.println("Message déchiffré avec la méthode Enigma : " + messageDechiffre);
-                } else {
-                    System.out.println("Veuillez entrer un message à déchiffrer.");
-                    MenuDechiffrement();
                 }
                 break;
             
