@@ -120,12 +120,15 @@ public class App {
                 break;
 
             case "4":
+                //on affiche ceci pour que l'utilisateur entre son message
                 System.out.println("Entrez le message à chiffrer : ");
                 message = scanner.nextLine();
+                //si le message est vide on redemande une saisie puis on redirige sur le menu de chiffrement
                 if(message.isEmpty()) {
                     System.out.println("Veuillez entre un message à chiffrer");
                     MenuChiffrement();
                 } else {
+                    //on appelle la class Enigma et la fonction de chiffrement et on affiche le message chiffré
                     String messageEnigma = Enigma.chiffrerEnigma(message);
                     System.out.println("Message chiffré avec la méthode Enigma :" + messageEnigma);
                 }
@@ -187,13 +190,17 @@ public class App {
                 break;
 
             case "4":
+                //messsage affiché
                 System.out.println("Entrez le message à déchiffrer : ");
                 message = scanner.nextLine();
+                //si le message n'est pas vide on appelle la classe Enigma et la fonction chiffrerEnigma
                 if (!message.isEmpty()) {
                     String messageDechiffre = Enigma.chiffrerEnigma(message);
+                    //on affiche le message déchiffré 
                     System.out.println("Message déchiffré avec la méthode Enigma : " + messageDechiffre);
                 } else {
                     System.out.println("Veuillez entrer un message à déchiffrer.");
+                    MenuDechiffrement();
                 }
                 break;
             
