@@ -72,6 +72,9 @@ public class Enigma {
     return resultat.toString();
   }
 
+  /**
+   * Cette fonction permet de faire passer une lettre en paramètre et de renvoyer la lettre avec laquelle elle a une paire et sinon on renvoie simplement la lettre
+   */
   private static char passerDansTableauConnexions(char lettre) {
     //récupérer la position de la lettre dans le tableau de connexions
     for (String connexion : tableauConnexions.split(" ")) {
@@ -87,6 +90,9 @@ public class Enigma {
     return lettre;
   }
 
+  /**
+   * Cette fonction permet de faire passer un lettre dans un rotor et de récupérer la position de la lettre dans le rotor
+   */
   private static char passerDansRotor(char lettre, String rotor, int position, boolean sensAller) {
     //retourne l'index de la lettre dans le rotor pour le chemin aller
     if (sensAller) {

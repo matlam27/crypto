@@ -3,6 +3,9 @@
  **/
 public class ChiffrementRot {
 
+  /**
+   * Cette fonction permet de chiffrer un message, elle prend en paramètre un message et le décalage des lettres du message et renvoie le message chiffré
+   */
   public static String chiffrer(String message, int decalage) {
 
     //on utilise un stringbuilder pour ajouter un caractère dans une string dans la boucle
@@ -24,7 +27,7 @@ public class ChiffrementRot {
       } else if (Character.isDigit(caractere)) {
           //on récupère l'entier depuis le caractère si s'en est un
           int chiffre = Character.getNumericValue(caractere);
-          //on fait le décalage en appliquant le modulo de 0 à 10
+          //on fait le décalage en appliquant le modulo de 0 à 9
           int nouveauChiffre = (chiffre + decalage) % 10;
           if (nouveauChiffre < 0) nouveauChiffre += 10;
           //on ajoute le caractère dans le résultat
@@ -40,6 +43,10 @@ public class ChiffrementRot {
     return (message);
   }
 
+
+  /**
+   * Cette fonction permet de déchiffrer un message, elle prend en paramètre un message et le décalage des lettres du message et renvoie le message déchiffré
+   */
   public static String dechiffrer(String message, int decalage) {
     
     //on applique le chiffrement pour déchiffrer en mettant le décalage en négatif
