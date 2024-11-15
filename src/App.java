@@ -164,12 +164,11 @@ public class App {
                 + "                                                         \n"
                 + "CHIFFREMENT\u001B[0m"); // Cyan
         System.out.println("=====================================");
-				System.out.println("1   - Chiffrement de César");
+		System.out.println("1   - Chiffrement avec rotation");
         System.out.println("2   - Chiffrement de Vigenère");
         System.out.println("3   - Chiffrement avec le carré de Polybe");
         System.out.println("4   - Chiffrement avec la méthode Enigma");
-				System.out.println("5   - Chiffrement avec le protocole RC4");
-
+		System.out.println("5   - Chiffrement avec le protocole RC4");
         System.out.println("r   - Retour au menu principal");
         System.out.println("q   - Quitte le programme");
         System.out.println("=====================================");
@@ -179,13 +178,13 @@ public class App {
         String message;
 
         switch (commande) {
-            case "1": // Chiffrement de César
+            case "1": // Chiffrement avec rotation
                 System.out.println("Entrez le message à chiffrer : ");
                 message = scanner.nextLine();
                 if (message.isEmpty()) {
                     System.out.println("Veuillez entrer un message à chiffrer.");
                 }
-                // Ici, vous pouvez ajouter l'algorithme de chiffrement de César
+                // Ici, vous pouvez ajouter l'algorithme de chiffrement avec rotation
                 break;
 
             case "2": // Chiffrement de Vigenère
@@ -376,7 +375,7 @@ public class App {
                 + "                                                         \n"
                 + "DECHIFFREMENT\u001B[0m"); // Magenta
         System.out.println("=====================================");
-        System.out.println("1   - Déchiffrement de César");
+        System.out.println("1   - Déchiffrement avec rotation");
         System.out.println("2   - Déchiffrement de Vigenère");
         System.out.println("3   - Déchiffrement avec le carré de Polybe");
         System.out.println("4   - Déchiffrement avec la méthode Enigma");
@@ -389,10 +388,10 @@ public class App {
         String message;
 
         switch (commande) {
-            case "1": // Déchiffrement de César
+            case "1": // Déchiffrement avec rotation
                 System.out.println("Entrez le message à déchiffrer : ");
                 message = scanner.nextLine();
-                // Ajouter le déchiffrement de César ici
+                // Ajouter le déchiffrement avec rotation ici
                 break;
 
             case "2": // Déchiffrement de Vigenère
