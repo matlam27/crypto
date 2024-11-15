@@ -80,6 +80,27 @@ public class App {
                 main(null);
                 break;
 
+            case "assaisonnement":
+            System.out.println("Entrez le mot de passe à assaisonner : ");
+            String motDePasse = scanner.nextLine();
+            while (motDePasse.isEmpty()) {
+                System.out.println("Veuillez entrer un mot de passe.");
+                motDePasse = scanner.nextLine();
+            }
+            SelPoivre hasher = new SelPoivre();
+            String hash = hasher.hacher(motDePasse);
+            System.out.println("\nRésultats :");
+            System.out.println("Sel généré : " + hasher.getSel());
+            System.out.println("Hash       : " + hash);
+            System.out.println("=====================================");
+            System.out.println("Appuyez sur 'ENTER' pour revenir au menu principal.");
+            while (!scanner.nextLine().isEmpty()) {
+                System.out.println("Appuyez sur 'ENTER' pour revenir au menu principal.");
+            }
+            main(null);
+            break;
+
+
             case "q": // Quitter le programme
                 System.exit(0); // Force l'arrêt complet du programme
                 break;
