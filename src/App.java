@@ -203,11 +203,24 @@ public class App {
                     System.out.println("Veuillez entrer un message à chiffrer.");
                     message = scanner.nextLine();
                 }
-                System.out.println("Entrez le décalage pour le chiffrement : ");
-                int decalage = scanner.nextInt();
-                while (decalage < 1 || decalage > 25) {
-                    System.out.println("Le décalage doit être compris entre 1 et 25.");
-                    decalage = scanner.nextInt();
+                //vérifier le décalage
+                int decalage = 0;
+                boolean decalageValide = false;
+                while (!decalageValide) {
+                    System.out.println("Entrez le décalage pour le chiffrement (nombre entier positif) : ");
+                    String decalageStr = scanner.nextLine();
+                    //faire en sorte de prendre que les nombres entiers positifs
+                    if (decalageStr.matches("\\d+")) {
+                        decalage = Integer.parseInt(decalageStr);
+                        //choisir un décalage entre 1 et 25
+                        if (decalage > 0 && decalage <= 25) {
+                            decalageValide = true;
+                        } else {
+                            System.out.println("Le décalage doit être compris entre 1 et 25.");
+                        }
+                    } else {
+                        System.out.println("Veuillez entrer un nombre entier positif.");
+                    }
                 }
                 String messageChiffreRotation = ChiffrementRot.chiffrer(message, decalage);
                 System.out.println("Message chiffré : " + messageChiffreRotation);
@@ -427,11 +440,24 @@ public class App {
                     System.out.println("Veuillez entrer un message à déchiffrer.");
                     message = scanner.nextLine();
                 }
-                System.out.println("Entrez le décalage pour le déchiffrement : ");
-                int decalage = scanner.nextInt();
-                while (decalage < 1 || decalage > 25) {
-                    System.out.println("Le décalage doit être compris entre 1 et 25.");
-                    decalage = scanner.nextInt();
+                //vérifier le décalage
+                int decalage = 0;
+                boolean decalageValide = false;
+                while (!decalageValide) {
+                    System.out.println("Entrez le décalage pour le chiffrement (nombre entier positif) : ");
+                    String decalageStr = scanner.nextLine();
+                    //faire en sorte de prendre que les nombres entiers positifs
+                    if (decalageStr.matches("\\d+")) {
+                        decalage = Integer.parseInt(decalageStr);
+                        //choisir un décalage entre 1 et 25
+                        if (decalage > 0 && decalage <= 25) {
+                            decalageValide = true;
+                        } else {
+                            System.out.println("Le décalage doit être compris entre 1 et 25.");
+                        }
+                    } else {
+                        System.out.println("Veuillez entrer un nombre entier positif.");
+                    }
                 }
                 String messageDechiffreRotation = ChiffrementRot.dechiffrer(message, decalage);
                 System.out.println("Message déchiffré : " + messageDechiffreRotation);
