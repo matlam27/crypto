@@ -1,3 +1,4 @@
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -9,16 +10,17 @@ import java.util.Base64;
 import java.util.Scanner;
 
 public class App {
-    public static void main(String[] args) {
+
+    public static void main(String[] args) throws Exception {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("\n\u001B[34m" +
-                "  _____              __       ___           \n" +
-                " / ___/_____ _____  / /____  / _ | ___  ___ \n" +
-                "/ /__/ __/ // / _ \\/ __/ _ \\/ __ |/ _ \\/ _ \\\n" +
-                "\\___/_/  \\_, / .__/\\__/\\___/_/ |_/ .__/ .__/\n" +
-                "        /___/_/                 /_/  /_/    \n" +
-                "                                                             \n" +
-                "MENU PRINCIPAL\u001B[0m");
+        System.out.println("\n\u001B[34m"
+                + "  _____              __       ___           \n"
+                + " / ___/_____ _____  / /____  / _ | ___  ___ \n"
+                + "/ /__/ __/ // / _ \\/ __/ _ \\/ __ |/ _ \\/ _ \\\n"
+                + "\\___/_/  \\_, / .__/\\__/\\___/_/ |_/ .__/ .__/\n"
+                + "        /___/_/                 /_/  /_/    \n"
+                + "                                                             \n"
+                + "MENU PRINCIPAL\u001B[0m");
         System.out.println("=====================================");
         System.out.println("help  - Affiche ce menu d'aide");
         System.out.println("1     - Chiffrement");
@@ -83,17 +85,16 @@ public class App {
                 main(null);
         }
     }
-    
 
     // Affiche le menu d'aide
-    private static void MenuAide(Scanner scanner) {
-        System.out.println("\n\u001B[33m" +
-                "   ___   _    __   \n" +
-                "  / _ | (_)__/ /__ \n" +
-                " / __ |/ / _  / -_)\n" +
-                "/_/ |_/_/\\_,_/\\__/ \n" +
-                "                                                         \n" +
-                "MENU D'AIDE\u001B[0m");
+    private static void MenuAide(Scanner scanner) throws Exception {
+        System.out.println("\n\u001B[33m"
+                + "   ___   _    __   \n"
+                + "  / _ | (_)__/ /__ \n"
+                + " / __ |/ / _  / -_)\n"
+                + "/_/ |_/_/\\_,_/\\__/ \n"
+                + "                                                         \n"
+                + "MENU D'AIDE\u001B[0m");
         System.out.println("=====================================");
         System.out.println("Commandes disponibles :");
         System.out.println("help    - Affiche ce menu d'aide");
@@ -137,7 +138,6 @@ public class App {
                 "     - Il vous suffit d'entrer une chaîne de caractères et de choisir l'algorithme que vous voulez exécuter");
         System.out.println("=====================================");
 
-
         String commande = scanner.nextLine().toLowerCase();
         if (commande.equals("r")) {
             main(null);
@@ -151,14 +151,17 @@ public class App {
     }
 
     // Affiche le menu de chiffrement
-    private static void MenuChiffrement(Scanner scanner) {
-        System.out.println("\n\u001B[36m\n" +
-                "  _______   _ ______                       __ \r\n" + //
-                " / ___/ /  (_) _/ _/______ __ _  ___ ___  / /_\r\n" + //
-                "/ /__/ _ \\/ / _/ _/ __/ -_)  ' \\/ -_) _ \\/ __/\r\n" + //
-                "\\___/_//_/_/_//_//_/  \\__/_/_/_/\\__/_//_/\\__/ \n" +
-                "                                                         \n" +
-                "CHIFFREMENT\u001B[0m"); // Cyan
+    private static void MenuChiffrement(Scanner scanner) throws Exception {
+        System.out.println("\n\u001B[36m\n"
+                + "  _______   _ ______                       __ \r\n"
+                + //
+                " / ___/ /  (_) _/ _/______ __ _  ___ ___  / /_\r\n"
+                + //
+                "/ /__/ _ \\/ / _/ _/ __/ -_)  ' \\/ -_) _ \\/ __/\r\n"
+                + //
+                "\\___/_//_/_/_//_//_/  \\__/_/_/_/\\__/_//_/\\__/ \n"
+                + "                                                         \n"
+                + "CHIFFREMENT\u001B[0m"); // Cyan
         System.out.println("=====================================");
         System.out.println("1   - Chiffrement par Rot(X)");
         System.out.println("2   - Chiffrement de Vigenère");
@@ -183,10 +186,24 @@ public class App {
             case "2": // Chiffrement de Vigenère
                 System.out.println("Entrez le message à chiffrer : ");
                 message = scanner.nextLine();
-                if (message.isEmpty()) {
+                while (message.isEmpty()) {
                     System.out.println("Veuillez entrer un message à chiffrer.");
+                    message = scanner.nextLine();
                 }
-                // Ajouter ici le chiffrement de Vigenère
+                System.out.println("Entrez la clé de chiffrement : ");
+                String cleVigenere = scanner.nextLine();
+                while (cleVigenere.isEmpty()) {
+                    System.out.println("Veuillez entrer une clé de chiffrement.");
+                    cleVigenere = scanner.nextLine();
+                }
+                String messageChiffreVigenere = Vigenere.chiffrer(message, cleVigenere);
+                System.out.println("Message chiffré : " + messageChiffreVigenere);
+                System.out.println("=====================================");
+                System.out.println("Appuyez sur 'ENTER' pour revenir au menu principal.");
+                while (!scanner.nextLine().isEmpty()) {
+                    System.out.println("Appuyez sur 'ENTER' pour revenir au menu principal.");
+                }
+                main(null);
                 break;
 
             case "3": // Chiffrement avec protocole RC4
@@ -238,10 +255,12 @@ public class App {
                             String messageEncode = Base64.getEncoder().encodeToString(messageChiffre);
                             System.out.println("Message chiffré encodé en Base64 : " + messageEncode);
                             System.out.println("=====================================");
+                            System.out.println("=====================================");
                             System.out.println("Appuyez sur 'ENTER' pour revenir au menu principal.");
-                            if (scanner.nextLine().isEmpty()) {
-                                main(null);
+                            while (!scanner.nextLine().isEmpty()) {
+                                System.out.println("Appuyez sur 'ENTER' pour revenir au menu principal.");
                             }
+                            main(null);
                             break;
 
                         case "n": // Utiliser la clé par défaut
@@ -256,12 +275,10 @@ public class App {
                                     System.out.println("Une erreur s'est produite : " + e.getMessage());
                                     return;
                                 }
-                            }
-
-                            // Utiliser la clé par défaut si le fichier n'existe pas ou est vide
+                            } // Utiliser la clé par défaut si le fichier n'existe pas ou est vide
                             else {
                                 cle = "f240485ebe4d995194c220d353a2bdd883807ae1b3572670aea1df45256f0e55"; // clé par
-                                                                                                          // défaut
+                                // défaut
                                 try (FileWriter writer = new FileWriter(fichierCle)) {
                                     writer.write(cle);
                                 } catch (IOException e) {
@@ -291,9 +308,10 @@ public class App {
                             System.out.println("Message chiffré encodé en Base64 : " + messageEncodeCleCustom);
                             System.out.println("=====================================");
                             System.out.println("Appuyez sur 'ENTER' pour revenir au menu principal.");
-                            if (scanner.nextLine().isEmpty()) {
-                                main(null);
+                            while (!scanner.nextLine().isEmpty()) {
+                                System.out.println("Appuyez sur 'ENTER' pour revenir au menu principal.");
                             }
+                            main(null);
                             break;
 
                         default:
@@ -319,14 +337,14 @@ public class App {
     }
 
     // Affiche le menu de déchiffrement
-    private static void MenuDechiffrement(Scanner scanner) {
-        System.out.println("\n\u001B[35m\n" +
-                "   ___   __     __   _ ______                       __ \n" +
-                "  / _ \\_/_/____/ /  (_) _/ _/______ __ _  ___ ___  / /_\n" +
-                " / // / -_) __/ _ \\/ / _/ _/ __/ -_)  ' \\/ -_) _ \\/ __/\n" +
-                "/____/\\__/\\__/_//_/_/_//_//_/  \\__/_/_/_/\\__/_//_/\\__/ \n" +
-                "                                                         \n" +
-                "DECHIFFREMENT\u001B[0m"); // Magenta
+    private static void MenuDechiffrement(Scanner scanner) throws Exception {
+        System.out.println("\n\u001B[35m\n"
+                + "   ___   __     __   _ ______                       __ \n"
+                + "  / _ \\_/_/____/ /  (_) _/ _/______ __ _  ___ ___  / /_\n"
+                + " / // / -_) __/ _ \\/ / _/ _/ __/ -_)  ' \\/ -_) _ \\/ __/\n"
+                + "/____/\\__/\\__/_//_/_/_//_//_/  \\__/_/_/_/\\__/_//_/\\__/ \n"
+                + "                                                         \n"
+                + "DECHIFFREMENT\u001B[0m"); // Magenta
         System.out.println("=====================================");
         System.out.println("1   - Déchiffrement par Rot(X)");
         System.out.println("2   - Déchiffrement de Vigenère");
@@ -348,7 +366,24 @@ public class App {
             case "2": // Déchiffrement de Vigenère
                 System.out.println("Entrez le message à déchiffrer : ");
                 message = scanner.nextLine();
-                // Ajouter le déchiffrement de Vigenère ici
+                while (message.isEmpty()) {
+                    System.out.println("Veuillez entrer un message à déchiffrer.");
+                    message = scanner.nextLine();
+                }
+                System.out.println("Entrez la clé de déchiffrement : ");
+                String cleVigenere = scanner.nextLine();
+                while (cleVigenere.isEmpty()) {
+                    System.out.println("Veuillez entrer une clé de déchiffrement.");
+                    cleVigenere = scanner.nextLine();
+                }
+                String messageDechiffreVigenere = Vigenere.dechiffrer(message, cleVigenere);
+                System.out.println("Message déchiffré : " + messageDechiffreVigenere);
+                System.out.println("=====================================");
+                System.out.println("Appuyez sur 'ENTER' pour revenir au menu principal.");
+                while (!scanner.nextLine().isEmpty()) {
+                    System.out.println("Appuyez sur 'ENTER' pour revenir au menu principal.");
+                }
+                main(null);
                 break;
 
             case "3": // Déchiffrement avec protocole RC4
@@ -400,9 +435,10 @@ public class App {
                             System.out.println("Message déchiffré : " + new String(messageDechiffreCleCustom));
                             System.out.println("=====================================");
                             System.out.println("Appuyez sur 'ENTER' pour revenir au menu principal.");
-                            if (scanner.nextLine().isEmpty()) {
-                                main(null);
+                            while (!scanner.nextLine().isEmpty()) {
+                                System.out.println("Appuyez sur 'ENTER' pour revenir au menu principal.");
                             }
+                            main(null);
                             break;
 
                         case "n":
@@ -444,9 +480,10 @@ public class App {
                             System.out.println("Message déchiffré : " + new String(messageDechiffre));
                             System.out.println("=====================================");
                             System.out.println("Appuyez sur 'ENTER' pour revenir au menu principal.");
-                            if (scanner.nextLine().isEmpty()) {
-                                main(null);
+                            while (!scanner.nextLine().isEmpty()) {
+                                System.out.println("Appuyez sur 'ENTER' pour revenir au menu principal.");
                             }
+                            main(null);
                             break;
 
                         default:
@@ -471,14 +508,14 @@ public class App {
     }
 
     // Affiche le menu de hachage
-    private static void MenuHash(Scanner scanner) {
-        System.out.println("\n\u001B[32m\n" +
-                "   __ __         __                \n" +
-                "  / // /__ _____/ /  ___ ____ ____ \n" +
-                " / _  / _ `/ __/ _ \\/ _ `/ _ `/ -_)\n" +
-                "/_//_/\\_,_/\\__/_//_/\\_,_/\\_, /\\__/ \n" +
-                "                        /___/      \n" +
-                "HACHAGE\u001B[0m"); // Vert
+    private static void MenuHash(Scanner scanner) throws Exception {
+        System.out.println("\n\u001B[32m\n"
+                + "   __ __         __                \n"
+                + "  / // /__ _____/ /  ___ ____ ____ \n"
+                + " / _  / _ `/ __/ _ \\/ _ `/ _ `/ -_)\n"
+                + "/_//_/\\_,_/\\__/_//_/\\_,_/\\_, /\\__/ \n"
+                + "                        /___/      \n"
+                + "HACHAGE\u001B[0m"); // Vert
         System.out.println("=====================================");
         System.out.println("1   - Hacher un mot de passe avec MD5");
         System.out.println("2   - Hacher un mot de passe avec SHA-256");
@@ -517,10 +554,10 @@ public class App {
                 System.out.println("Voici le mot de passe haché : " + motDePasse);
                 System.out.println("=====================================");
                 System.out.println("Appuyez sur 'ENTER' pour revenir au menu principal.");
-                scanner.nextLine();
-                if (scanner.nextLine().isEmpty()) {
-                    main(null);
+                while (!scanner.nextLine().isEmpty()) {
+                    System.out.println("Appuyez sur 'ENTER' pour revenir au menu principal.");
                 }
+                main(null);
                 break;
 
             case "r":
