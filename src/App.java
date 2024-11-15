@@ -8,6 +8,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import java.util.Scanner;
 
+
 public class App {
 
     public static void main(String[] args) throws Exception {
@@ -78,6 +79,7 @@ public class App {
             case "q": // Quitter le programme
                 System.exit(0); // Force l'arrêt complet du programme
                 break;
+
 
             default: // Commande non reconnue
                 System.out.println("Commande non reconnue. Tapez 'help' pour voir les commandes disponibles.");
@@ -167,9 +169,11 @@ public class App {
         System.out.println("3   - Chiffrement avec le carré de Polybe");
         System.out.println("4   - Chiffrement avec la méthode Enigma");
 				System.out.println("5   - Chiffrement avec le protocole RC4");
+
         System.out.println("r   - Retour au menu principal");
         System.out.println("q   - Quitte le programme");
         System.out.println("=====================================");
+
 
         String commande = scanner.nextLine().toLowerCase();
         String message;
@@ -268,6 +272,7 @@ public class App {
                                 System.out.println("Veuillez entrer un message à chiffrer.");
                                 message = scanner.nextLine();
                             }
+                            // vérifier si le message fait au moins 2 caractères
                             while (message.length() < 2) {
                                 System.out.println("Le message doit contenir au moins 2 caractères.");
                                 message = scanner.nextLine();
@@ -280,7 +285,6 @@ public class App {
                             // Encodage du message chiffré en Base64
                             String messageEncode = Base64.getEncoder().encodeToString(messageChiffre);
                             System.out.println("Message chiffré encodé en Base64 : " + messageEncode);
-                            System.out.println("=====================================");
                             System.out.println("=====================================");
                             System.out.println("Appuyez sur 'ENTER' pour revenir au menu principal.");
                             while (!scanner.nextLine().isEmpty()) {
@@ -380,7 +384,7 @@ public class App {
         System.out.println("r   - Retour au menu principal");
         System.out.println("q   - Quitte le programme");
         System.out.println("=====================================");
-
+      
         String commande = scanner.nextLine().toLowerCase();
         String message;
 
@@ -527,10 +531,10 @@ public class App {
                             // Pour déchiffrer en décodant d'abord en Base64
                             byte[] messageChiffreBytes = Base64.getDecoder().decode(message);
 
-                            // Déchiffrer le message avec la clé personnalisée
+                            // Déchiffrer le message avec la clé
                             RC4 rc4Dechiffrer = new RC4(cle);
-                            byte[] messageDechiffre = rc4Dechiffrer.chiffrerDechiffrer(messageChiffreBytes);
-                            System.out.println("Message déchiffré : " + new String(messageDechiffre));
+                            byte[] messageDechiffreRC4 = rc4Dechiffrer.chiffrerDechiffrer(messageChiffreBytes);
+                            System.out.println("Message déchiffré : " + new String(messageDechiffreRC4));
                             System.out.println("=====================================");
                             System.out.println("Appuyez sur 'ENTER' pour revenir au menu principal.");
                             while (!scanner.nextLine().isEmpty()) {
@@ -538,7 +542,7 @@ public class App {
                             }
                             main(null);
                             break;
-
+                            
                         default:
                             System.out.println("Commande non reconnue. Voulez-vous utiliser votre propre clé ? (o/n)");
                             reponse = scanner.nextLine().toLowerCase();
@@ -580,9 +584,21 @@ public class App {
         String motDePasse;
 
         switch (commande) {
+            case "1": // Hacher un mot de passe avec MD5
+            System.out.println("Entrez le mot de passe à hacher :");
+            motDePasse = scanner.nextLine();
+            motDePasse = MD5.hash(motDePasse);
+            System.out.println("Mot de passe haché avec MD5 : "+ motDePasse);
+            System.out.println("=====================================");
+                System.out.println("Appuyez sur 'ENTER' pour revenir au menu principal.");
+                while (!scanner.nextLine().isEmpty()) {
+                    System.out.println("Appuyez sur 'ENTER' pour revenir au menu principal.");
+                }
+                main(null);
+
             case "2": // Hacher un mot de passe avec SHA-256
-                // On demande à l'utilisateur d'entrer le mot de passe à hacher
-                System.out.println("Entrez le mot de passe à hacher : ");
+            // On demande à l'utilisateur d'entrer le mot de passe à hacher    
+            System.out.println("Entrez le mot de passe à hacher : ");
                 motDePasse = scanner.nextLine();
                 // Vérifier si le mot de passe est vide
                 while (motDePasse.isEmpty()) {
@@ -618,17 +634,16 @@ public class App {
                 break;
 
             case "q":
-                System.exit(0); // Force l'arrêt complet du programme
+                scanner.close();
                 return;
 
             default:
                 System.out.println("Commande non reconnue.");
-                MenuHash(scanner);
+                MenuHash( scanner);
                 break;
         }
 
     }
-
     private static int getRandomNumber(int graine) {
         // Calculer le carré du graine
         int graineAuCarre = graine * graine;
