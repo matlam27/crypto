@@ -15,6 +15,7 @@ import java.security.MessageDigest;
 import java.io.FileNotFoundException;
 import java.security.NoSuchAlgorithmException;
 
+
 public class App {
 
     public static void main(String[] args) throws Exception {
@@ -537,10 +538,10 @@ public class App {
                             // Pour déchiffrer en décodant d'abord en Base64
                             byte[] messageChiffreBytes = Base64.getDecoder().decode(message);
 
-                            // Déchiffrer le message avec la clé personnalisée
+                            // Déchiffrer le message avec la clé
                             RC4 rc4Dechiffrer = new RC4(cle);
-                            byte[] messageDechiffre = rc4Dechiffrer.chiffrerDechiffrer(messageChiffreBytes);
-                            System.out.println("Message déchiffré : " + new String(messageDechiffre));
+                            byte[] messageDechiffreRC4 = rc4Dechiffrer.chiffrerDechiffrer(messageChiffreBytes);
+                            System.out.println("Message déchiffré : " + new String(messageDechiffreRC4));
                             System.out.println("=====================================");
                             System.out.println("Appuyez sur 'ENTER' pour revenir au menu principal.");
                             while (!scanner.nextLine().isEmpty()) {
@@ -548,7 +549,7 @@ public class App {
                             }
                             main(null);
                             break;
-
+                            
                         default:
                             System.out.println("Commande non reconnue. Voulez-vous utiliser votre propre clé ? (o/n)");
                             reponse = scanner.nextLine().toLowerCase();
@@ -590,9 +591,21 @@ public class App {
         String motDePasse;
 
         switch (commande) {
+            case "1": // Hacher un mot de passe avec MD5
+            System.out.println("Entrez le mot de passe à hacher :");
+            motDePasse = scanner.nextLine();
+            motDePasse = MD5.hash(motDePasse);
+            System.out.println("Mot de passe haché avec MD5 : "+ motDePasse);
+            System.out.println("=====================================");
+                System.out.println("Appuyez sur 'ENTER' pour revenir au menu principal.");
+                while (!scanner.nextLine().isEmpty()) {
+                    System.out.println("Appuyez sur 'ENTER' pour revenir au menu principal.");
+                }
+                main(null);
+
             case "2": // Hacher un mot de passe avec SHA-256
-                // On demande à l'utilisateur d'entrer le mot de passe à hacher
-                System.out.println("Entrez le mot de passe à hacher : ");
+            // On demande à l'utilisateur d'entrer le mot de passe à hacher    
+            System.out.println("Entrez le mot de passe à hacher : ");
                 motDePasse = scanner.nextLine();
                 // Vérifier si le mot de passe est vide
                 while (motDePasse.isEmpty()) {
@@ -708,12 +721,13 @@ public class App {
                 break;
 
             case "q":
-                System.exit(0); // Force l'arrêt complet du programme
+                scanner.close();
                 return;
 
             default:
                 System.out.println("Commande non reconnue.");
-                MenuDechiffrement();
+                MenuHash( scanner);
+
                 break;
         }
     }
