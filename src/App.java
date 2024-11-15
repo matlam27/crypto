@@ -189,14 +189,14 @@ public class App {
             case "4":
                 System.out.println("Entrez le message à déchiffrer : ");
                 message = scanner.nextLine();
-                if(message.isEmpty()) {
-                    System.out.println("Veuillez entre un message à déchiffrer");
-                    MenuChiffrement();
+                if (!message.isEmpty()) {
+                    String messageDechiffre = Enigma.chiffrerEnigma(message);
+                    System.out.println("Message déchiffré avec la méthode Enigma : " + messageDechiffre);
                 } else {
-                    String messageEnigma = Enigma.chiffrerEnigma(message);
-                    System.out.println("Message déchiffré avec la méthode Enigma :" + messageEnigma);
+                    System.out.println("Veuillez entrer un message à déchiffrer.");
                 }
                 break;
+            
 
             case "r":
                 main(null);
