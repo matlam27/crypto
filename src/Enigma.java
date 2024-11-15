@@ -8,7 +8,7 @@ public class Enigma {
   public static String rotor2 = "AJDKSIRUXBLHWTMCQGZNPYFVOE";
   public static String rotor3 = "BDFHJLCPRTXVZNYEIWGAKMUSQO";
   public static String reflecteur = "YRUHQSLDPXNGOKMIEBFZCWVJAT";
-  public static String tableauConnexions = "AM FI NV PS TU WZ AB JC KD LE MG OH PI QR ST UX YV";
+  public static String tableauConnexions = "AM FI NV PS TU WZ KB JC QD LE OG RH YX";
 
   /**
    * Cette fonction permet de chiffrer un message pris en paramètre et renvoie le message chiffré en utilisant la méthode d'Enigma
