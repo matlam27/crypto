@@ -10,6 +10,10 @@ import java.util.Scanner;
 
 public class App {
 
+    /**
+     * @param args
+     * @throws Exception
+     */
     public static void main(String[] args) throws Exception {
         Scanner scanner = new Scanner(System.in);
         System.out.println("\n\u001B[34m"
@@ -91,6 +95,10 @@ public class App {
     }
 
     // Affiche le menu d'aide
+    /**
+     * @param scanner
+     * @throws Exception
+     */
     private static void MenuAide(Scanner scanner) throws Exception {
         System.out.println("\n\u001B[33m"
                 + "   ___   _    __   \n"
@@ -171,6 +179,10 @@ public class App {
     }
 
     // Affiche le menu de chiffrement
+    /**
+     * @param scanner
+     * @throws Exception
+     */
     private static void MenuChiffrement(Scanner scanner) throws Exception {
         System.out.println("\n\u001B[36m\n"
                 + "  _______   _ ______                       __ \r\n"
@@ -254,6 +266,14 @@ public class App {
                 }
                 main(null);
                 break;
+
+            case "3": // Chiffrement avec le carré de Polybe
+            final String messageChiffrePolybe = Polybe.main(null);
+            System.out.println("Message chiffré : " + messageChiffrePolybe);
+            System.out.println("=====================================");
+            main(null);
+            break;
+
 
             case "4": // chiffrement avec Enigma
                 //on affiche ceci pour que l'utilisateur entre son message
@@ -411,6 +431,10 @@ public class App {
     }
 
     // Affiche le menu de déchiffrement
+    /**
+     * @param scanner
+     * @throws Exception
+     */
     private static void MenuDechiffrement(Scanner scanner) throws Exception {
         System.out.println("\n\u001B[35m\n"
                 + "   ___   __     __   _ ______                       __ \n"
@@ -422,9 +446,8 @@ public class App {
         System.out.println("=====================================");
         System.out.println("1   - Déchiffrement avec rotation");
         System.out.println("2   - Déchiffrement de Vigenère");
-        System.out.println("3   - Déchiffrement avec le carré de Polybe");
-        System.out.println("4   - Déchiffrement avec la méthode Enigma");
-        System.out.println("5   - Déchiffrement avec le protocole RC4");
+        System.out.println("3   - Déchiffrement avec la méthode Enigma");
+        System.out.println("4   - Déchiffrement avec le protocole RC4");
         System.out.println("r   - Retour au menu principal");
         System.out.println("q   - Quitte le programme");
         System.out.println("=====================================");
@@ -492,7 +515,7 @@ public class App {
                 main(null);
                 break;
 
-            case "4": // déchiffrement avec Enigma
+            case "3": // déchiffrement avec Enigma
                 //messsage affiché
                 System.out.println("Entrez le message à déchiffrer : ");
                 message = scanner.nextLine();
@@ -517,7 +540,7 @@ public class App {
                 main(null);
                 break;
 
-            case "5": // Déchiffrement avec protocole RC4
+            case "4": // Déchiffrement avec protocole RC4
 
                 // On demande à l'utilisateur s'il veut utiliser sa propre clé
                 System.out.println("Voulez-vous utiliser votre propre clé ? (o/n)");
@@ -640,6 +663,10 @@ public class App {
     }
 
     // Affiche le menu de hachage
+    /**
+     * @param scanner
+     * @throws Exception
+     */
     private static void MenuHash(Scanner scanner) throws Exception {
         System.out.println("\n\u001B[32m\n"
                 + "   __ __         __                \n"
@@ -719,6 +746,12 @@ public class App {
                 break;
         }
     }
+
+    // Génère un nombre pseudo-aléatoire
+    /**
+     * @param graine
+     * @return
+     */
     private static int getRandomNumber(int graine) {
         // Calculer le carré du graine
         int graineAuCarre = graine * graine;
