@@ -108,42 +108,58 @@ public class App {
         System.out.println("help    - Affiche ce menu d'aide");
         System.out.println("r  - Retour au menu principal");
         System.out.println("q   - Quitte le programme");
-        System.out.println(
-                "\n1    - Cette commande permet de chiffrer une chaîne de caractères en utilisant un chiffrement entré par l'utilisateur, cela sécurise \n       n'importe quelle communication");
-        System.out.println(
-                "     - Il vous suffit d'entrer une chaîne de caractères, puis un nombre pour le chiffrement");
-        System.out.println(
-                "\n2    - Cette commande permet de déchiffrer une chaîne de caractères en utilisant un chiffrement entré par l'utilisateur");
-        System.out.println(
-                "     - Il vous suffit d'entrer une chaîne de caractères, puis un nombre pour le chiffrement");
-        System.out.println(
-                "\n3    - Cette commande permet de chiffrer et déchiffrer en utilisant le chiffre de Vigenère, cela permet une protection de messages");
-        System.out.println("     - Il vous suffit d'entrer une chaîne de caractères et un un mot");
-        System.out.println(
-                "\n4    - Cette commande permet de chiffrer et déchiffrer en utilisant un Carré de Polybe, cela permet de communiquer de façon sécurisée");
+        System.out.println("=====================================");
+        System.out.print("Menu de Chiffrement : ");
+
+        System.out.println("\n1    - Cette commande permet de chiffrer une chaîne de caractères à l'aide du chiffrement par rotation,  entrée par l'utilisateur, cela sécurise \n       n'importe quelle communication");
+        System.out.println("     - Il vous suffit d'entrer une chaîne de caractères et un chiffre pour la rotation");
+
+        System.out.println("\n2    - Cette commande permet de chiffrer une chaîne de caractères en utilisant le chiffre de Vigenère, cela permet une protection de messages");
+        System.out.println("     - Il vous suffit d'entrer une chaîne de caractères et une clé");
+
+        System.out.println("\n3    - Cette commande permet de chiffrer une chaîne de caractères en utilisant un Carré de Polybe, cela permet de communiquer de façon sécurisée");
+        System.out.println("     - Il vous suffit d'entrer une chaîne de caractères et de choisir l'ordre des lettres du carré de Polybe");
+
+        System.out.println("\n4    - Cette commande permet de chiffrer une chaîne de caractères en utilisant la méthode Enigma, cela permet de communiquer de manière protégée");
         System.out.println("     - Il vous suffit d'entrer une chaîne de caractères");
-        System.out.println(
-                "\n5    - Cette commande permet de générer un nombre pseudo-aléatoire, cela renforce l'aléa des communications");
+
+        System.out.println( "\n5    - Cette commande permet de chiffrer en utilisant l'algorithme RC4, cela permet de sécuriser les communications");
         System.out.println("     - Il vous suffit d'entrer une chaîne de caractères");
-        System.out.println(
-                "\n6    - Cette commande permet de chiffrer et déchiffrer en utilisant la méthode Enigma, cela permet de communiquer de manière protégée");
+
+        System.out.println("=====================================");
+
+        System.out.println("Menu de Déchiffrement : ");
+
+        System.out.println("\n1    - Cette commande permet de déchiffrer une chaîne de caractères à l'aide du chiffrement par rotation, entrée par l'utilisateur");
+        System.out.println("     - Il vous suffit d'entrer une chaîne de caractères, puis un nombre pour le déchiffrement");
+
+        System.out.println("\n2    - Cette commande permet de déchiffrer une chaîne de caractères en utilisant le chiffre de Vigenère, cela permet une protection de messages");
+        System.out.println("     - Il vous suffit d'entrer une chaîne de caractères et une clé");
+        
+        System.out.println("\n3    - Cette commande permet de déchiffrer une chaîne de caractères en utilisant un Carré de Polybe, cela permet de communiquer de façon sécurisée");
+        System.out.println("     - Il vous suffit d'entrer une chaîne de caractères et de choisir l'ordre des lettres du carré de Polybe");
+
+        System.out.println("\n4    - Cette commande permet de déchiffrer une chaîne de caractères en utilisant la méthode Enigma, cela permet de communiquer de manière protégée");
         System.out.println("     - Il vous suffit d'entrer une chaîne de caractères");
-        System.out.println(
-                "\n7    - Cette commande permet de chiffrer et déchiffrer en utilisant l'algorithme RC4, cela permet de sécuriser les communications");
+
+        System.out.println( "\n5    - Cette commande permet de déchiffrer en utilisant l'algorithme RC4, cela permet de sécuriser les communications");
         System.out.println("     - Il vous suffit d'entrer une chaîne de caractères");
-        System.out.println(
-                "\n8    - Cette commande permet de hacher à l'aide de MD5, des messages, cela permet de vérifier l'intégrité des messages");
+
+        System.out.println("=====================================");
+
+        System.out.println("Menu de Hachage : ");
+
+        System.out.println("\n1    - Cette commande permet de hacher à l'aide de MD5, des messages, cela permet de vérifier l'intégrité des messages");
         System.out.println("     - Il vous suffit d'entrer une chaîne de caractères");
-        System.out.println(
-                "\n9    - Cette commande permet de hacher à l'aide de SHA-256, des messages, cela permet de garantir l'intégrité des messages");
+
+        System.out.println("\n2    - Cette commande permet de hacher à l'aide de SHA-256, des messages, cela permet de garantir l'intégrité des messages");
         System.out.println("     - Il vous suffit d'entrer une chaîne de caractères");
-        System.out.println(
-                "\n10   - Cette commande permet à l'utilisateur de choisir l'algorithme de chiffrement ou de hachage qu'il préfère");
-        System.out.println("     - Il vous suffit d'appuyer sur entrée sur un algorithme de la liste");
-        System.out.println(
-                "\n11   - Cette commande permet à l'utilisateur d'utiliser plusieurs algorithmes successivement avec un même message");
-        System.out.println(
-                "     - Il vous suffit d'entrer une chaîne de caractères et de choisir l'algorithme que vous voulez exécuter");
+
+        System.out.println("=====================================");
+        
+        System.out.println("\n4    - Cette commande permet de générer un nombre pseudo-aléatoire, cela renforce l'aléa des communications");
+        System.out.println("     - Il vous suffit d'entrer une chaîne de caractères");
+        
         System.out.println("=====================================");
 
         String commande = scanner.nextLine().toLowerCase();
@@ -730,68 +746,6 @@ public class App {
 
                 break;
         }
-    }
-
-    // Affiche le menu de hachage
-    private static void MenuHash() {
-        System.out.println("\nHachage :");
-        System.out.println("1   - Hacher un mot de passe avec MD5");
-        System.out.println("2   - Hacher un mot de passe avec SHA-256");
-        System.out.println("r   - Retour au menu principal");
-        System.out.println("q   - Quitte le programme");
-
-        Scanner scanner = new Scanner(System.in);
-        String commande = scanner.nextLine().toLowerCase();
-        String motDePasse;
-
-        switch (commande) {
-            case "1":
-            System.out.println("Entrez le mot de passe à hacher :");
-            motDePasse = scanner.nextLine();
-            motDePasse = MD5.hash(motDePasse);
-            System.out.println("Mot de passe haché avec MD5 : "+ motDePasse);
-            case "2": // Hacher un mot de passe avec SHA-256
-            // On demande à l'utilisateur d'entrer le mot de passe à hacher    
-            System.out.println("Entrez le mot de passe à hacher : ");
-                motDePasse = scanner.nextLine();
-                // Vérifier si le mot de passe est vide
-                while (motDePasse.isEmpty()) {
-                    System.out.println("Veuillez entrer un mot de passe à hacher.");
-                    motDePasse = scanner.nextLine();
-                }
-                try {
-                    // Créer une instance de MessageDigest avec l'algorithme SHA-256
-                    MessageDigest msg = MessageDigest.getInstance("SHA-256");
-                    // on récupère les bits du hash
-                    byte[] hash = msg.digest(motDePasse.getBytes(StandardCharsets.UTF_8));
-                    // convertir bytes en hexadécimal
-                    StringBuilder s = new StringBuilder();
-                    for (byte b : hash) {
-                        s.append(Integer.toString((b & 0xff) + 0x100, 16).substring(1));
-                    }
-                    motDePasse = s.toString();
-                } catch (NoSuchAlgorithmException e) {
-                    System.out.println("Une erreur s'est produite : " + e.getMessage());
-                }
-                System.out.println("Le mot de passe a été haché avec succès.");
-                System.out.println("Voici le mot de passe haché : " + motDePasse);
-                main(null);
-                break;
-
-            case "r":
-                main(null);
-                break;
-
-            case "q":
-                scanner.close();
-                return;
-
-            default:
-                System.out.println("Commande non reconnue.");
-                MenuHash();
-                break;
-        }
-
     }
     private static int getRandomNumber(int graine) {
         // Calculer le carré du graine
