@@ -308,8 +308,9 @@ public class Polybe {
 
     /**
      * Point d'entrée du programme
+     * @return 
      **/
-    public static void main(String[] args) {
+    public static String main(String[] args) {
         try (Scanner scanner = new Scanner(System.in)) {
             System.out.println(INSTRUCTIONS);
 
@@ -353,6 +354,7 @@ public class Polybe {
             System.out.println("Original : " + texte);
             System.out.println("Chiffré  : " + chiffre);
             System.out.println("Déchiffré: " + dechiffre);
+            return "Chiffrement et déchiffrement terminés";
         }
     }
 }
