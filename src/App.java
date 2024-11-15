@@ -1,4 +1,3 @@
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -163,9 +162,11 @@ public class App {
                 + "                                                         \n"
                 + "CHIFFREMENT\u001B[0m"); // Cyan
         System.out.println("=====================================");
-        System.out.println("1   - Chiffrement par Rot(X)");
+				System.out.println("1   - Chiffrement de César");
         System.out.println("2   - Chiffrement de Vigenère");
-        System.out.println("3   - Chiffrement avec protocole RC4");
+        System.out.println("3   - Chiffrement avec le carré de Polybe");
+        System.out.println("4   - Chiffrement avec la méthode Enigma");
+				System.out.println("5   - Chiffrement avec le protocole RC4");
         System.out.println("r   - Retour au menu principal");
         System.out.println("q   - Quitte le programme");
         System.out.println("=====================================");
@@ -206,7 +207,32 @@ public class App {
                 main(null);
                 break;
 
-            case "3": // Chiffrement avec protocole RC4
+						case "4": // chiffrement avec Enigma
+                //on affiche ceci pour que l'utilisateur entre son message
+                System.out.println("Entrez le message à chiffrer : ");
+                message = scanner.nextLine();
+                //si le message est vide on redemande une saisie puis on redirige sur le menu de chiffrement
+                while (message.isEmpty()) {
+                    System.out.println("Veuillez entre un message à chiffrer");
+                    message = scanner.nextLine();
+                }
+                //vérification du caractère valide
+                while (!message.matches("[A-Z ]*")) {
+                    System.out.println("Veuillez n'entrer que des mots ou phrases écrit(e)s en majuscules.");
+                    message = scanner.nextLine();
+                }
+                    //on appelle la class Enigma et la fonction de chiffrement et on affiche le message chiffré
+                    String messageEnigma = Enigma.chiffrerEnigma(message);
+                    System.out.println("Message chiffré avec la méthode Enigma :" + messageEnigma);
+                System.out.println("=====================================");
+                            System.out.println("Appuyez sur 'ENTER' pour revenir au menu principal.");
+                            while (!scanner.nextLine().isEmpty()) {
+                                System.out.println("Appuyez sur 'ENTER' pour revenir au menu principal.");
+                            }
+                            main(null);
+                break;
+						
+            case "5": // Chiffrement avec protocole RC4
 
                 // On demande à l'utilisateur s'il veut utiliser sa propre clé
                 System.out.println("Voulez-vous utiliser votre propre clé ? (o/n)");
@@ -346,9 +372,11 @@ public class App {
                 + "                                                         \n"
                 + "DECHIFFREMENT\u001B[0m"); // Magenta
         System.out.println("=====================================");
-        System.out.println("1   - Déchiffrement par Rot(X)");
+        System.out.println("1   - Déchiffrement de César");
         System.out.println("2   - Déchiffrement de Vigenère");
-        System.out.println("3   - Déchiffrement avec protocole RC4");
+        System.out.println("3   - Déchiffrement avec le carré de Polybe");
+        System.out.println("4   - Déchiffrement avec la méthode Enigma");
+        System.out.println("5   - Déchiffrement avec le protocole RC4");
         System.out.println("r   - Retour au menu principal");
         System.out.println("q   - Quitte le programme");
         System.out.println("=====================================");
@@ -386,7 +414,32 @@ public class App {
                 main(null);
                 break;
 
-            case "3": // Déchiffrement avec protocole RC4
+						case "4": // déchiffrement avec Enigma
+                //messsage affiché
+                System.out.println("Entrez le message à déchiffrer : ");
+                message = scanner.nextLine();
+                //si le message n'est pas vide on appelle la classe Enigma et la fonction chiffrerEnigma
+                while (message.isEmpty()) {
+                    System.out.println("Veuillez entre un message à chiffrer");
+                    message = scanner.nextLine();
+                }
+                //vérification du caractère valide
+                while (!message.matches("[A-Z ]*")) {
+                    System.out.println("Veuillez n'entrer que des mots ou phrases écrit(e)s en majuscules.");
+                    message = scanner.nextLine();
+                }
+                    String messageDechiffre = Enigma.chiffrerEnigma(message);
+                    //on affiche le message déchiffré 
+                    System.out.println("Message déchiffré avec la méthode Enigma : " + messageDechiffre);
+          System.out.println("=====================================");
+                            System.out.println("Appuyez sur 'ENTER' pour revenir au menu principal.");
+                            while (!scanner.nextLine().isEmpty()) {
+                                System.out.println("Appuyez sur 'ENTER' pour revenir au menu principal.");
+                            }
+                            main(null);
+                break;
+						
+            case "5": // Déchiffrement avec protocole RC4
 
                 // On demande à l'utilisateur s'il veut utiliser sa propre clé
                 System.out.println("Voulez-vous utiliser votre propre clé ? (o/n)");
